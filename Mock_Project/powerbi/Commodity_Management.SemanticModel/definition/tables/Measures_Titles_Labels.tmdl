@@ -1,0 +1,42 @@
+table Measures_Titles_Labels
+	lineageTag: afe0cdc0-52a3-4d64-94b5-55c63276de7b
+
+	measure 'CBAM Card Title' = "CBAM certificate cost at EUR " & FORMAT ( [Carbon Price Value], "#,0" ) & "/t"
+		lineageTag: 8d025783-d0ac-4547-a59d-03dce62e1859
+
+	measure 'Concentration Card Title' = "Supplier concentration: " & [Concentration Verdict]
+		lineageTag: 9f676fd8-84cb-4c21-a6b1-61366816f595
+
+	measure 'Surcharge Headline' =
+			
+			VAR Gap = [Unjustified Surcharge (Annualised)]
+			RETURN
+			    IF (
+			        Gap > 0,
+			        "EUR " & FORMAT ( Gap, "#,0" ) & " of annual surcharge is not justified by the index",
+			        "All surcharge claims are justified by the index"
+			    )
+		lineageTag: b7753438-60e8-47ae-8f55-5394299583d4
+
+	column Column1
+		dataType: string
+		isHidden
+		lineageTag: f5d002bd-e89c-4309-939b-86c21e27b340
+		summarizeBy: none
+		sourceColumn: Column1
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Measures_Titles_Labels = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i44FAA==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Column1 = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Column1", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,66 @@
+table Measures_FX_Decomposition
+	lineageTag: 8bf2f2d8-3938-4a94-95a5-c34223e187e2
+
+	measure 'Index Move (EUR)' =
+			
+			VAR BaseMonth  = MIN ( dim_price_book[month_index] )
+			VAR LastMonth  = MAX ( dim_price_book[month_index] )
+			VAR BaseValue  =
+			    CALCULATE ( SUM ( dim_price_book[eur_per_kg] ), dim_price_book[month_index] = BaseMonth )
+			VAR LastValue  =
+			    CALCULATE ( SUM ( dim_price_book[eur_per_kg] ), dim_price_book[month_index] = LastMonth )
+			RETURN
+			    DIVIDE ( LastValue, BaseValue ) - 1
+		lineageTag: 58045ef8-ca2e-46a7-9e50-6bf8db6b59e4
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Index Move (Quote Ccy)' =
+			
+			VAR BaseMonth  = MIN ( dim_price_book[month_index] )
+			VAR LastMonth  = MAX ( dim_price_book[month_index] )
+			VAR BaseValue  =
+			    CALCULATE ( SUM ( dim_price_book[settlement_price] ), dim_price_book[month_index] = BaseMonth )
+			VAR LastValue  =
+			    CALCULATE ( SUM ( dim_price_book[settlement_price] ), dim_price_book[month_index] = LastMonth )
+			RETURN
+			    DIVIDE ( LastValue, BaseValue ) - 1
+		lineageTag: 85d15d0c-87bb-416d-97a1-1b9f3f71f7ce
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'FX Amplification' = DIVIDE ( 1 + [Index Move (EUR)], 1 + [Index Move (Quote Ccy)] ) - 1
+		lineageTag: 25430a26-5394-4a2a-88c7-a506d3bf989a
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Metal Price (EUR/kg)' =
+			
+			VAR LastMonth = MAX ( dim_price_book[month_index] )
+			RETURN
+			    CALCULATE ( SUM ( dim_price_book[eur_per_kg] ), dim_price_book[month_index] = LastMonth )
+		formatString: 0
+		lineageTag: acb9c9ec-c2ed-4bd5-a3ff-724cce844fd8
+
+	column Column1
+		dataType: string
+		isHidden
+		lineageTag: 31b659bf-19bd-4554-9d26-1ba1faa1072a
+		summarizeBy: none
+		sourceColumn: Column1
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Measures_FX_Decomposition = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i44FAA==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Column1 = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Column1", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

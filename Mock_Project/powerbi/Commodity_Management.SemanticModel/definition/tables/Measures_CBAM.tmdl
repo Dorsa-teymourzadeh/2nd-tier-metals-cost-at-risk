@@ -1,0 +1,106 @@
+table Measures_CBAM
+	lineageTag: 20b146c4-7513-461b-99e3-f1df806e1b2e
+
+	measure 'Carbon Price Value' = SELECTEDVALUE ( 'Carbon Price'[Value], 85 )
+		formatString: 0
+		lineageTag: 9b1bafe9-1807-4908-950b-8f311c358da8
+
+	measure 'CBAM Liable Metal (t)' =
+			
+			DIVIDE (
+			    CALCULATE (
+			        SUM ( fact_tier2_allocation[allocated_metal_kg] ),
+			        fact_tier2_allocation[cbam_liable_flag] = TRUE ()
+			    ),
+			    1000
+			)
+		lineageTag: cadf9ea8-2666-4290-a263-986fe49b5699
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'CBAM Embedded Emissions (tCO2e)' =
+			
+			DIVIDE (
+			    SUMX (
+			        FILTER (
+			            fact_tier2_allocation,
+			            fact_tier2_allocation[cbam_liable_flag] = TRUE ()
+			        ),
+			        fact_tier2_allocation[allocated_metal_kg]
+			            * COALESCE ( RELATED ( dim_supplier_tier2_risk[co2e_kg_per_kg_metal] ), 0 )
+			    ),
+			    1000
+			)
+		lineageTag: 47197229-f7c4-41b6-8c48-6addfb94f89d
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'CBAM Certificate Cost' = [CBAM Embedded Emissions (tCO2e)] * [Carbon Price Value]
+		lineageTag: bc50d25a-eaff-4787-898f-eb4a349e0141
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Imported Share of Metal Value' =
+			
+			DIVIDE (
+			    CALCULATE (
+			        [Allocated Tier-2 Spend],
+			        fact_tier2_allocation[import_flag] = TRUE ()
+			    ),
+			    CALCULATE (
+			        [Allocated Tier-2 Spend],
+			        REMOVEFILTERS ( fact_tier2_allocation[import_flag] )
+			    )
+			)
+		lineageTag: 2ffeb35d-9143-42c8-b2ac-0885ee20198e
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'CBAM Cost at Benchmark Intensity' =
+			
+			VAR Benchmark =
+			    MINX (
+			        FILTER (
+			            ALL ( dim_supplier_tier2_risk ),
+			            dim_supplier_tier2_risk[co2e_kg_per_kg_metal] > 0
+			        ),
+			        dim_supplier_tier2_risk[co2e_kg_per_kg_metal]
+			    )
+			VAR LiableKg =
+			    CALCULATE (
+			        SUM ( fact_tier2_allocation[allocated_metal_kg] ),
+			        fact_tier2_allocation[cbam_liable_flag] = TRUE ()
+			    )
+			RETURN
+			    DIVIDE ( LiableKg * Benchmark, 1000 ) * [Carbon Price Value]
+		lineageTag: 624986d6-3076-471b-9c3f-d05582bf5aed
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'CBAM Avoidable Cost' = [CBAM Certificate Cost] - [CBAM Cost at Benchmark Intensity]
+		lineageTag: 20f3a771-fcdb-43ee-bb9a-6c69c768d89e
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Column1
+		dataType: string
+		isHidden
+		lineageTag: b9e10a37-de20-4a51-9264-4293a7c130a2
+		summarizeBy: none
+		sourceColumn: Column1
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Measures_CBAM = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i44FAA==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Column1 = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Column1", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

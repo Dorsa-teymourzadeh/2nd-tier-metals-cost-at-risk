@@ -1,0 +1,17 @@
+﻿country_code,country_name,region,geopolitical_risk_index,export_control_flag,logistics_risk_index,energy_price_index,resource_nationalism_score
+DE,Germany,Western Europe,1.8,False,2.1,128.0,1.0
+IT,Italy,Southern Europe,2.4,False,3.0,121.0,1.5
+ES,Spain,Southern Europe,2.2,False,2.8,112.0,1.4
+AT,Austria,Western Europe,1.7,False,2.2,124.0,1.0
+SI,Slovenia,Central Europe,2.1,False,2.6,118.0,1.2
+HU,Hungary,Central Europe,4.2,False,3.1,115.0,3.4
+PL,Poland,Central Europe,3.1,False,2.9,119.0,2.0
+CZ,Czechia,Central Europe,2.3,False,2.7,117.0,1.3
+SE,Sweden,Northern Europe,1.5,False,2.4,96.0,0.8
+LT,Lithuania,Northern Europe,5.6,False,3.6,123.0,1.9
+TR,Turkey,Near East,6.4,False,4.2,134.0,5.1
+CN,China,Asia Pacific,7.8,True,5.4,88.0,7.2
+KR,South Korea,Asia Pacific,4.8,False,3.3,101.0,2.1
+AE,United Arab Emirates,Middle East,4.1,False,3.0,72.0,3.8
+CL,Chile,South America,3.9,False,4.6,105.0,5.8
+ID,Indonesia,Asia Pacific,6.1,True,5.1,84.0,8.1

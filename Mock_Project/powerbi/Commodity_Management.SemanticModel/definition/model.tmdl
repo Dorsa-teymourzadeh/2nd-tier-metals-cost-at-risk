@@ -1,0 +1,55 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-US
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+queryGroup 00staging
+
+	annotation PBI_QueryGroupOrder = 0
+
+queryGroup 01_Facts
+
+	annotation PBI_QueryGroupOrder = 1
+
+queryGroup 02_Dimensions
+
+	annotation PBI_QueryGroupOrder = 2
+
+annotation __PBI_TimeIntelligenceEnabled = 0
+
+annotation PBI_QueryOrder = ["DataFolder","stg_gold_folder","dim_price_book","dim_supplier_tier2_risk","dim_country_risk","dim_part","dim_supplier_tier1","dim_metal","dim_date","fact_cost_at_risk","fact_metal_concentration","fact_metal_exposure","fact_should_cost","fact_surcharge_claims","fact_ntier_coverage","fact_tier2_allocation","kpi_executive_summary","Measures_Spend","Measures_Should-Cost","Measures_Cost-at-Risk","Measures_FX_Decomposition","Measures_N-Tier_Transparency","Measures_Concentration_(HHI)","Measures_Tier-2 Risk","Measures_CBAM","Measures_Titles_Labels"]
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table dim_price_book
+ref table dim_supplier_tier2_risk
+ref table fact_cost_at_risk
+ref table fact_metal_concentration
+ref table fact_metal_exposure
+ref table fact_should_cost
+ref table fact_surcharge_claims
+ref table fact_ntier_coverage
+ref table fact_tier2_allocation
+ref table kpi_executive_summary
+ref table dim_country_risk
+ref table dim_part
+ref table dim_supplier_tier1
+ref table dim_metal
+ref table dim_date
+ref table 'Carbon Price'
+ref table 'Bridge Steps'
+ref table Measures_Spend
+ref table Measures_Should-Cost
+ref table Measures_Cost-at-Risk
+ref table Measures_FX_Decomposition
+ref table Measures_N-Tier_Transparency
+ref table Measures_Concentration_(HHI)
+ref table 'Measures_Tier-2 Risk'
+ref table Measures_CBAM
+ref table Measures_Titles_Labels
+
+ref cultureInfo en-US
+

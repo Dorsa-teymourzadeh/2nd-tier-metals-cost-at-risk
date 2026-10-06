@@ -1,0 +1,83 @@
+table dim_country_risk
+	lineageTag: 74f01a78-3e7f-4d1d-8ec1-f0c31faade06
+
+	column country_code
+		dataType: string
+		lineageTag: 33e61ef4-1fcb-4803-a371-e384d14355ae
+		summarizeBy: none
+		sourceColumn: country_code
+
+		annotation SummarizationSetBy = Automatic
+
+	column country_name
+		dataType: string
+		lineageTag: c3ede086-1cbf-4f52-a26e-9994465c79ec
+		summarizeBy: none
+		sourceColumn: country_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column region
+		dataType: string
+		lineageTag: 6bb19a2a-128d-401b-882b-de0579691523
+		summarizeBy: none
+		sourceColumn: region
+
+		annotation SummarizationSetBy = Automatic
+
+	column geopolitical_risk_index
+		dataType: double
+		lineageTag: 5eb9185d-630c-4d77-ac84-8bc2f77684a4
+		summarizeBy: sum
+		sourceColumn: geopolitical_risk_index
+
+		annotation SummarizationSetBy = Automatic
+
+	column export_control_flag
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 7cec589d-20e1-4cf1-8b0d-623d73a3e7e1
+		summarizeBy: none
+		sourceColumn: export_control_flag
+
+		annotation SummarizationSetBy = Automatic
+
+	column logistics_risk_index
+		dataType: double
+		lineageTag: 84c7d1ca-a1cf-41bf-a52a-813d80fc282f
+		summarizeBy: sum
+		sourceColumn: logistics_risk_index
+
+		annotation SummarizationSetBy = Automatic
+
+	column energy_price_index
+		dataType: double
+		lineageTag: 744b0c40-460c-4bea-8833-c482de5d3f65
+		summarizeBy: sum
+		sourceColumn: energy_price_index
+
+		annotation SummarizationSetBy = Automatic
+
+	column resource_nationalism_score
+		dataType: double
+		lineageTag: f87b470b-68ff-4c71-b00b-6441c9e77950
+		summarizeBy: sum
+		sourceColumn: resource_nationalism_score
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_country_risk = m
+		mode: import
+		queryGroup: 02_Dimensions
+		source =
+				let
+				    Source = Csv.Document(File.Contents(DataFolder & "raw\dim_country_risk.csv"),[Delimiter=",", Columns=8, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"country_code", type text}, {"country_name", type text}, {"region", type text}, {"geopolitical_risk_index", type number}, {"export_control_flag", type logical}, {"logistics_risk_index", type number}, {"energy_price_index", type number}, {"resource_nationalism_score", type number}}, "en-US")
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

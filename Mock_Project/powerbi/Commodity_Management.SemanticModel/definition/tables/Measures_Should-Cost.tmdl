@@ -1,0 +1,84 @@
+table Measures_Should-Cost
+	lineageTag: f997bb6b-b863-4f20-9e9c-39bde41f0519
+
+	measure Should-Cost = SUM ( fact_should_cost[should_cost_eur] )
+		formatString: 0
+		lineageTag: 2b7a2c6a-c5b5-4224-b92c-cb7dbb0e5782
+
+	measure 'Price Variance' = [Purchasing Spend] - [Should-Cost]
+		formatString: 0
+		lineageTag: e797ffa8-a90c-42b8-8f18-f3cb14f251d1
+
+	measure 'Price Variance %' = DIVIDE ( [Price Variance], [Should-Cost] )
+		formatString: 0.00\ %;-0.00\ %;0.00\ %
+		lineageTag: 303c76bb-6464-4fa1-92a3-f9222258e974
+
+	measure 'Base Price Value' =
+			
+			SUMX (
+			    fact_should_cost,
+			    fact_should_cost[base_price_eur] * fact_should_cost[order_qty]
+			)
+		formatString: 0
+		lineageTag: 7e442987-4b1f-4428-a3dd-f78acded95fe
+
+	measure Metal-Justified = SUM ( fact_should_cost[metal_justified_eur] )
+		formatString: 0
+		lineageTag: 14424c4a-7890-4265-ac6c-503995d72a7f
+
+	measure Inflation-Justified = SUM ( fact_should_cost[inflation_justified_eur] )
+		formatString: 0
+		lineageTag: ca9e1d0e-92d8-43da-a7ec-c731e48273ee
+
+	measure Unexplained = SUM ( fact_should_cost[unexplained_eur] )
+		formatString: 0.00\ %;-0.00\ %;0.00\ %
+		lineageTag: a09cb660-9e25-4f55-b039-1d77a7305ccb
+
+	measure 'Bridge Value' =
+			
+			VAR _Step = SELECTEDVALUE ( 'Bridge Steps'[Step Order] )
+			RETURN
+			    SWITCH (
+			        _Step,
+			        1, [Base Price Value],
+			        2, [Metal-Justified],
+			        3, [Inflation-Justified],
+			        4, [Unexplained]
+			    )
+		formatString: 0
+		lineageTag: 8e2c3140-a892-43ce-990c-eb501fbd6444
+
+	measure 'Bridge Check' =
+			
+			VAR Reconstructed =
+			    [Base Price Value] + [Metal-Justified] + [Inflation-Justified] + [Unexplained]
+			RETURN
+			    IF ( ABS ( Reconstructed - [Purchasing Spend] ) < 1, "OK", "BROKEN" )
+		lineageTag: 94a961d6-172f-4290-9d3b-13bd8ca2f7a9
+
+	measure 'Unexplained %' = DIVIDE ( [Unexplained], [Should-Cost] )
+		formatString: 0.0\ %;-0.0\ %;0.0\ %
+		lineageTag: 33f314fd-7f64-4fbb-8fdb-0607d6f8729b
+
+	column Column1
+		dataType: string
+		isHidden
+		lineageTag: 502248e7-1d10-4b35-9383-bbcc1414071b
+		summarizeBy: none
+		sourceColumn: Column1
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Measures_Should-Cost = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i44FAA==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Column1 = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Column1", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

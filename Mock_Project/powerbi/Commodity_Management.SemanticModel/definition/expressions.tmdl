@@ -1,0 +1,20 @@
+expression stg_gold_folder =
+		let
+		    Source = Folder.Files(DataFolder & "gold")
+		in
+		    Source
+	lineageTag: da850d31-6e00-48f0-a368-1a7d96451491
+	queryGroup: 00staging
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression DataFolder = "C:\Projects\2nd_Tier_Commodity_Management\Mock_Project\data\" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 7c3e9a52-4b1d-4f6e-9a8c-2d5f1e0b7a63
+	queryGroup: 00staging
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Text
+

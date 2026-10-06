@@ -1,0 +1,155 @@
+table fact_metal_exposure
+	lineageTag: 9d67c218-b6a8-4fa4-967a-2ffd1caae4f1
+
+	column po_id
+		dataType: string
+		lineageTag: fdc3b028-2c2b-4e38-8366-5d7bfd95682f
+		summarizeBy: none
+		sourceColumn: po_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column po_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: bc53cc4c-8662-4443-8f27-9a1c720048c5
+		summarizeBy: none
+		sourceColumn: po_date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column year_month
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: e1d671ad-e6a7-418f-976b-971396324db4
+		summarizeBy: none
+		sourceColumn: year_month
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column part_id
+		dataType: string
+		lineageTag: bd2cec6f-0c68-4aba-a800-518d77345e59
+		summarizeBy: none
+		sourceColumn: part_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column tier1_id
+		dataType: string
+		lineageTag: cf8f433c-c41b-4e94-bc99-a496ab24a0da
+		summarizeBy: none
+		sourceColumn: tier1_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column contract_id
+		dataType: string
+		lineageTag: 72efaa0a-1532-46ce-be91-ae8466d1c73a
+		summarizeBy: none
+		sourceColumn: contract_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column metal_id
+		dataType: string
+		lineageTag: 8c8c4f90-de2f-45cf-b1d4-b994223d0a5c
+		summarizeBy: none
+		sourceColumn: metal_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column order_qty
+		dataType: int64
+		formatString: 0
+		lineageTag: 90466d8f-b0d8-4ba8-b02f-16fe4fb458b0
+		summarizeBy: sum
+		sourceColumn: order_qty
+
+		annotation SummarizationSetBy = Automatic
+
+	column net_value_eur
+		dataType: double
+		lineageTag: 4754b52b-aba0-4d96-9c7f-508847908ece
+		summarizeBy: sum
+		sourceColumn: net_value_eur
+
+		annotation SummarizationSetBy = Automatic
+
+	column cost_share
+		dataType: double
+		lineageTag: 2973cecf-7b55-4947-b991-4f897dde170f
+		summarizeBy: sum
+		sourceColumn: cost_share
+
+		annotation SummarizationSetBy = Automatic
+
+	column metal_kg
+		dataType: double
+		lineageTag: 3e4921e5-c49e-4481-a384-0420fb578965
+		summarizeBy: sum
+		sourceColumn: metal_kg
+
+		annotation SummarizationSetBy = Automatic
+
+	column metal_spend_eur
+		dataType: double
+		lineageTag: d615bf9e-d516-461c-af49-b95ee35febe1
+		summarizeBy: sum
+		sourceColumn: metal_spend_eur
+
+		annotation SummarizationSetBy = Automatic
+
+	column eur_per_kg
+		dataType: double
+		lineageTag: a9ffdd25-55e3-4df0-8a34-2545c6eba64a
+		summarizeBy: sum
+		sourceColumn: eur_per_kg
+
+		annotation SummarizationSetBy = Automatic
+
+	column index_move_vs_base
+		dataType: double
+		lineageTag: 4b1ba095-85db-4cdb-a07f-440121817b9a
+		summarizeBy: sum
+		sourceColumn: index_move_vs_base
+
+		annotation SummarizationSetBy = Automatic
+
+	column metal_value_at_index_eur
+		dataType: double
+		lineageTag: 56e99a79-2c4f-4f53-bad3-6741589f4c61
+		summarizeBy: sum
+		sourceColumn: metal_value_at_index_eur
+
+		annotation SummarizationSetBy = Automatic
+
+	column index_vs_billed_delta_eur
+		dataType: double
+		lineageTag: 59bfb3b5-c8b9-488e-89f5-19115a45a20c
+		summarizeBy: sum
+		sourceColumn: index_vs_billed_delta_eur
+
+		annotation SummarizationSetBy = Automatic
+
+	partition fact_metal_exposure = m
+		mode: import
+		queryGroup: 01_Facts
+		source =
+				let
+				    Source = stg_gold_folder,
+				    Content = Source{[Name = "fact_metal_exposure.csv"]}[Content],
+				    #"Imported CSV" = Csv.Document(Content,[Delimiter=",", Columns=16, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(#"Imported CSV", [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"po_id", type text}, {"po_date", type date}, {"year_month", type date}, {"part_id", type text}, {"tier1_id", type text}, {"contract_id", type text}, {"metal_id", type text}, {"order_qty", Int64.Type}, {"net_value_eur", type number}, {"cost_share", type number}, {"metal_kg", type number}, {"metal_spend_eur", type number}, {"eur_per_kg", type number}, {"index_move_vs_base", type number}, {"metal_value_at_index_eur", type number}, {"index_vs_billed_delta_eur", type number}}, "en-US")
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

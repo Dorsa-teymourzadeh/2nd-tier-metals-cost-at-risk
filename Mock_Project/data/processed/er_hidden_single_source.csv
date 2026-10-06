@@ -1,0 +1,15 @@
+﻿t2_entity_id,golden_name,country_code,n_tier1,n_declared_spellings,tier1_list,metals,hidden_by_aliasing_flag
+T2E-001,"Yunnan Hongtai Aluminium Smelting Co., Ltd.",CN,6,3,T1-001|T1-003|T1-004|T1-005|T1-007|T1-008,ALUMINIUM,True
+T2E-013,Lombardy Metal Forming S.r.l.,IT,4,1,T1-001|T1-002|T1-007|T1-008,COPPER,False
+T2E-008,Alpine Aluminium Extrusion AG,AT,2,1,T1-001|T1-007,ALUMINIUM,False
+T2E-012,Donau Stahlservice Ges.m.b.H.,AT,2,1,T1-001|T1-005,STEEL_HRC,False
+T2E-014,Emirates Aluminium Trading FZE,AE,2,1,T1-003|T1-007,ALUMINIUM,False
+T2E-002,Müller & Sohn Metallwerke GmbH,DE,1,1,T1-001,COPPER,False
+T2E-005,Anadolu Bakır Sanayi A.Ş.,TR,1,1,T1-007,COPPER,False
+T2E-007,Rheinland Zinkveredelung GmbH & Co. KG,DE,1,1,T1-004,ZINC,False
+T2E-010,Iberia Silver Contacts S.L.,ES,1,1,T1-001,SILVER,False
+T2E-011,"Hunan Silver Technology Co., Ltd.",CN,1,1,T1-003,SILVER,False
+T2E-015,"Korea Precision Steel Co., Ltd.",KR,1,1,T1-001,STEEL_HRC,False
+T2E-016,Vistula Copper Wire Sp. z o.o.,PL,1,1,T1-001,COPPER,False
+T2E-019,Guangdong Sunrise Int'l Metals Co.,CN,1,1,T1-001,ALUMINIUM,False
+T2E-020,Saxony Steel & Wire GmbH,DE,1,1,T1-001,STEEL_HRC,False

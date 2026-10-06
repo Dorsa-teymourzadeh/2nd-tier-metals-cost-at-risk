@@ -1,0 +1,357 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 0,
+        "y": 74.264753981948886
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 739.12781228741028,
+            "y": 966.24825886731992
+          },
+          "nodeIndex": "dim_price_book",
+          "nodeLineageTag": "afdd07a4-3079-485f-bf4d-71f77afc95b4",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 25
+        },
+        {
+          "location": {
+            "x": 1373.50838925492,
+            "y": 17.757159427277429
+          },
+          "nodeIndex": "dim_supplier_tier2_risk",
+          "nodeLineageTag": "64e62226-35dd-4405-90c4-e7e0fd746b10",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 12
+        },
+        {
+          "location": {
+            "x": 71.6768254538924,
+            "y": 785.58987500886212
+          },
+          "nodeIndex": "fact_cost_at_risk",
+          "nodeLineageTag": "bee599e8-8268-4ebe-8094-bf9302b2de29",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 13
+        },
+        {
+          "location": {
+            "x": 1081.4171881910763,
+            "y": 1005.5922068986239
+          },
+          "nodeIndex": "fact_metal_concentration",
+          "nodeLineageTag": "10c19f01-ff0c-4fcf-9faa-23c569ba778d",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 14
+        },
+        {
+          "location": {
+            "x": 354.23967216644576,
+            "y": 938.24949670495982
+          },
+          "nodeIndex": "fact_metal_exposure",
+          "nodeLineageTag": "9d67c218-b6a8-4fa4-967a-2ffd1caae4f1",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 15
+        },
+        {
+          "location": {
+            "x": 739.01275417100533,
+            "y": 421.07862302013348
+          },
+          "nodeIndex": "fact_ntier_coverage",
+          "nodeLineageTag": "153cfc32-f1c8-4792-b908-24d7dd537df0",
+          "size": {
+            "height": 296,
+            "width": 234
+          },
+          "zIndex": 16
+        },
+        {
+          "location": {
+            "x": 69.8621991990629,
+            "y": 380.32615102573209
+          },
+          "nodeIndex": "fact_should_cost",
+          "nodeLineageTag": "4c5d1010-f4bd-4982-8017-3a6b108f36ac",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 24
+        },
+        {
+          "location": {
+            "x": 390.464293795424,
+            "y": 362.09818687144059
+          },
+          "nodeIndex": "fact_surcharge_claims",
+          "nodeLineageTag": "41e91783-63cf-4788-ab06-a5aa0cecd11d",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 26
+        },
+        {
+          "location": {
+            "x": 1152.225536049822,
+            "y": 291.9743282262246
+          },
+          "nodeIndex": "fact_tier2_allocation",
+          "nodeLineageTag": "34f2523b-ada4-4a75-bd1c-9db9c7d7ec2c",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 23
+        },
+        {
+          "location": {
+            "x": 41.554650273263633,
+            "y": 0
+          },
+          "nodeIndex": "kpi_executive_summary",
+          "nodeLineageTag": "c078d5fc-e432-4d9c-bb59-18cf7b8f008e",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 22
+        },
+        {
+          "location": {
+            "x": 977.00533545592748,
+            "y": 0
+          },
+          "nodeIndex": "dim_country_risk",
+          "nodeLineageTag": "74f01a78-3e7f-4d1d-8ec1-f0c31faade06",
+          "size": {
+            "height": 272,
+            "width": 234
+          },
+          "zIndex": 17
+        },
+        {
+          "location": {
+            "x": 1753.2433735903444,
+            "y": 22.493359016571958
+          },
+          "nodeIndex": "dim_date",
+          "nodeLineageTag": "fc89dbbd-5fdd-4e54-81b0-2f4d9d8292e7",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 18
+        },
+        {
+          "location": {
+            "x": 1496.9915553758333,
+            "y": 590.55225610977084
+          },
+          "nodeIndex": "dim_metal",
+          "nodeLineageTag": "1faa0d62-6bdc-4c9a-9332-b780e8ca90f7",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 19
+        },
+        {
+          "location": {
+            "x": 2617.1901416563815,
+            "y": 530.97943859267593
+          },
+          "nodeIndex": "dim_part",
+          "nodeLineageTag": "de4cc993-d337-4504-a4c3-ffb4848d4dc3",
+          "size": {
+            "height": 296,
+            "width": 234
+          },
+          "zIndex": 20
+        },
+        {
+          "location": {
+            "x": 486.43846378567309,
+            "y": 0.30043789526001774
+          },
+          "nodeIndex": "dim_supplier_tier1",
+          "nodeLineageTag": "60039523-1eea-439a-9d7c-0f8dffe282c5",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 21
+        },
+        {
+          "location": {
+            "x": 2859.6354913831178,
+            "y": 552.79610344931189
+          },
+          "nodeIndex": "Carbon Price",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 1
+        },
+        {
+          "location": {
+            "x": 3102.0808411098542,
+            "y": 552.79610344931189
+          },
+          "nodeIndex": "Bridge Steps",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 2
+        },
+        {
+          "location": {
+            "x": 3344.5261908365906,
+            "y": 600.79610344931189
+          },
+          "nodeIndex": "Measures_Spend",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 3
+        },
+        {
+          "location": {
+            "x": 3586.9715405633269,
+            "y": 600.79610344931189
+          },
+          "nodeIndex": "Measures_Should-Cost",
+          "nodeLineageTag": "f997bb6b-b863-4f20-9e9c-39bde41f0519",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 4
+        },
+        {
+          "location": {
+            "x": 3829.4168902900633,
+            "y": 600.79610344931189
+          },
+          "nodeIndex": "Measures_Cost-at-Risk",
+          "nodeLineageTag": "9996b9bb-aa5d-4c8d-a721-be96ea342ff4",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 5
+        },
+        {
+          "location": {
+            "x": 4071.8622400167997,
+            "y": 600.79610344931189
+          },
+          "nodeIndex": "Measures_FX_Decomposition",
+          "nodeLineageTag": "8bf2f2d8-3938-4a94-95a5-c34223e187e2",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 6
+        },
+        {
+          "location": {
+            "x": 4314.3075897435356,
+            "y": 600.79610344931189
+          },
+          "nodeIndex": "Measures_N-Tier_Transparency",
+          "nodeLineageTag": "4e88818d-d202-4002-99c7-b183d3014f7d",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 7
+        },
+        {
+          "location": {
+            "x": 4556.7529394702724,
+            "y": 600.79610344931189
+          },
+          "nodeIndex": "Measures_Concentration_(HHI)",
+          "nodeLineageTag": "2ed82ee9-908d-4280-a50f-56da57dd9403",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 8
+        },
+        {
+          "location": {
+            "x": 4799.1982891970092,
+            "y": 600.79610344931189
+          },
+          "nodeIndex": "Measures_Tier-2 Risk",
+          "nodeLineageTag": "d850ae66-cab7-4b5a-996d-2dde6a23da2d",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 9
+        },
+        {
+          "location": {
+            "x": 5041.643638923746,
+            "y": 600.79610344931189
+          },
+          "nodeIndex": "Measures_CBAM",
+          "nodeLineageTag": "20b146c4-7513-461b-99e3-f1df806e1b2e",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 10
+        },
+        {
+          "location": {
+            "x": 5284.0889886504829,
+            "y": 600.79610344931189
+          },
+          "nodeIndex": "Measures_Titles_Labels",
+          "nodeLineageTag": "afe0cdc0-52a3-4d64-94b5-55c63276de7b",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 11
+        }
+      ],
+      "name": "All tables",
+      "zoomValue": 63.287087723234123,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "All tables",
+  "defaultDiagram": "All tables"
+}

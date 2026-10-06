@@ -1,0 +1,100 @@
+relationship AutoDetected_2d37b257-c460-48fe-aaf1-7e717ed81d9c
+	fromColumn: dim_price_book.metal_id
+	toColumn: fact_metal_concentration.metal_id
+
+relationship AutoDetected_5833e648-1427-4f3f-81e6-3cba59f31e86
+	fromColumn: fact_metal_exposure.metal_id
+	toColumn: fact_metal_concentration.metal_id
+
+relationship AutoDetected_cb529171-87f8-41e1-afad-6180092ce669
+	fromColumn: fact_ntier_coverage.metal_id
+	toColumn: fact_metal_concentration.metal_id
+
+relationship AutoDetected_13161ed4-e9ac-43a4-9535-7cec83363f37
+	fromColumn: fact_tier2_allocation.metal_id
+	toColumn: fact_metal_concentration.metal_id
+
+relationship AutoDetected_a14a4b2a-abcd-4ce4-aec8-8c2af80fd644
+	fromColumn: fact_tier2_allocation.t2_entity_id
+	toColumn: dim_supplier_tier2_risk.t2_entity_id
+
+relationship AutoDetected_cb209fe2-0002-4136-97c6-1b22268a2692
+	fromColumn: fact_metal_exposure.contract_id
+	toColumn: fact_cost_at_risk.contract_id
+
+relationship AutoDetected_dd701435-ef59-4ffb-8dc7-3bd1ca630853
+	fromColumn: fact_should_cost.contract_id
+	toColumn: fact_cost_at_risk.contract_id
+
+relationship AutoDetected_3622d606-62e0-483d-89e2-a823fa931bef
+	isActive: false
+	fromColumn: fact_metal_exposure.po_id
+	toColumn: fact_should_cost.po_id
+
+relationship AutoDetected_84c97f4c-bc09-4038-be1f-c60ef6dadfc9
+	isActive: false
+	fromColumn: fact_tier2_allocation.tier1_metal_spend_eur
+	toColumn: fact_ntier_coverage.tier1_metal_spend_eur
+
+relationship AutoDetected_cbb8de92-a7ca-4c26-8e08-0884e14ddc6a
+	fromColumn: dim_price_book.metal_id
+	toColumn: dim_metal.metal_id
+
+relationship AutoDetected_dd370d5e-d40e-489b-8204-1e458e6bfb15
+	isActive: false
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: fact_metal_concentration.metal_id
+	toColumn: dim_metal.metal_id
+
+relationship AutoDetected_0e8de007-5565-4b3b-8257-ea2c3dc7a7e7
+	fromColumn: fact_metal_exposure.metal_id
+	toColumn: dim_metal.metal_id
+
+relationship AutoDetected_5b004537-420b-4949-b627-387c7c674d84
+	fromColumn: fact_ntier_coverage.metal_id
+	toColumn: dim_metal.metal_id
+
+relationship AutoDetected_b424a2ba-e9dd-4954-8a18-bbc6362f3526
+	fromColumn: fact_tier2_allocation.metal_id
+	toColumn: dim_metal.metal_id
+
+relationship AutoDetected_03ecc75d-b58c-4918-9344-b2000cddf055
+	fromColumn: dim_supplier_tier2_risk.country_code
+	toColumn: dim_country_risk.country_code
+
+relationship AutoDetected_52e3b09c-7876-419c-90f8-3f194e8e69df
+	isActive: false
+	fromColumn: fact_surcharge_claims.country_code
+	toColumn: dim_country_risk.country_code
+
+relationship AutoDetected_0d2f53e1-c83c-47d2-904e-0903fd21074e
+	fromColumn: dim_supplier_tier1.country_code
+	toColumn: dim_country_risk.country_code
+
+relationship AutoDetected_7c97d52b-9171-41ee-8766-2b7628161a35
+	fromColumn: fact_cost_at_risk.part_id
+	toColumn: dim_part.part_id
+
+relationship AutoDetected_526d3c8f-eb5f-4430-9048-a9ad98fb71c2
+	isActive: false
+	fromColumn: fact_metal_exposure.part_id
+	toColumn: dim_part.part_id
+
+relationship AutoDetected_86f451fb-13d5-4c74-9486-25b1125c2822
+	isActive: false
+	fromColumn: fact_should_cost.part_id
+	toColumn: dim_part.part_id
+
+relationship a2029073-a9c3-af64-69a7-f6169792f94d
+	fromColumn: fact_should_cost.po_date
+	toColumn: dim_date.date
+
+relationship bb827df3-e245-6eda-3e24-24b9212c90d0
+	fromColumn: fact_metal_exposure.po_date
+	toColumn: dim_date.date
+
+relationship f6137d05-41eb-54b6-03dd-dd86a4bf8983
+	fromColumn: fact_surcharge_claims.tier1_id
+	toColumn: dim_supplier_tier1.tier1_id
+

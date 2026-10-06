@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "Commodity_Management"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "23a3dfbf-7087-4d71-b4cb-f52b116494a6"
+  }
+}

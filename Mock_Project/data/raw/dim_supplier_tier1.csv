@@ -1,0 +1,9 @@
+﻿tier1_id,tier1_name,country_code,city,product_families,payment_terms_days,relationship_since,planned_share_of_spend,preferred_supplier_flag,claimed_metal_surcharge_pct,surcharge_effective_date,surcharge_justification_text
+T1-001,Nordmetall Praezision GmbH,DE,Hagen,Busbar System|Contactor,60,2014,0.19,True,0.0,,
+T1-002,Bavaria Contact Systems AG,DE,Amberg,Contactor|Circuit Breaker,60,2000,0.17,True,0.0,,
+T1-003,Lombardia Elettromeccanica S.p.A.,IT,Bergamo,Circuit Breaker,90,2009,0.13,True,0.0,,
+T1-004,Adriatic Switchgear Solutions d.o.o.,SI,Maribor,Switchgear,45,2008,0.15,True,11.5,2024-07-01,General increase in metal raw material costs
+T1-005,Anatolia Switchgear Sanayi A.S.,TR,Izmir,Switchgear|Circuit Breaker,90,2016,0.11,False,0.0,,
+T1-006,Shenzhen Precision Components Ltd.,CN,Shenzhen,Contactor|Circuit Breaker,90,2007,0.1,False,0.0,,
+T1-007,Visegrad Elektro Kft.,HU,Gyor,Switchgear|Busbar System,90,2006,0.09,False,0.0,,
+T1-008,Iberia Conductores S.L.,ES,Zaragoza,Busbar System,60,2011,0.06,False,0.0,,

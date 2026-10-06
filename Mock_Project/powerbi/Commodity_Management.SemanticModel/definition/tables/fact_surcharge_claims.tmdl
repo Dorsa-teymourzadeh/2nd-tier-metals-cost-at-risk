@@ -1,0 +1,162 @@
+table fact_surcharge_claims
+	lineageTag: 41e91783-63cf-4788-ab06-a5aa0cecd11d
+
+	column tier1_id
+		dataType: string
+		lineageTag: dbb5e96b-405e-4a5f-9d67-56af24733186
+		summarizeBy: none
+		sourceColumn: tier1_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column tier1_name
+		dataType: string
+		lineageTag: e09a451f-b5c9-4f72-a255-f1d5c8e30ddb
+		summarizeBy: none
+		sourceColumn: tier1_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column country_code
+		dataType: string
+		lineageTag: cb32b49f-c20d-457d-afc8-7419c877e191
+		summarizeBy: none
+		sourceColumn: country_code
+
+		annotation SummarizationSetBy = Automatic
+
+	column surcharge_effective_date
+		dataType: string
+		lineageTag: ac1590e5-b8b5-4995-9214-6e86263bd32c
+		summarizeBy: none
+		sourceColumn: surcharge_effective_date
+
+		annotation SummarizationSetBy = Automatic
+
+	column claimed_surcharge_pct
+		dataType: double
+		formatString: 0.0\ %;-0.0\ %;0.0\ %
+		lineageTag: 04aff197-f80b-406b-96f6-14f8a4dcf0e0
+		summarizeBy: sum
+		sourceColumn: claimed_surcharge_pct
+
+		annotation SummarizationSetBy = Automatic
+
+	column justified_by_index_pct
+		dataType: double
+		formatString: 0.0\ %;-0.0\ %;0.0\ %
+		lineageTag: 6e1a4a49-0a90-4cd0-b528-ae945928fa00
+		summarizeBy: sum
+		sourceColumn: justified_by_index_pct
+
+		annotation SummarizationSetBy = Automatic
+
+	column justified_by_inflation_pct
+		dataType: double
+		formatString: 0.0\ %;-0.0\ %;0.0\ %
+		lineageTag: b6105179-7ae7-4abf-a346-f366daf5953f
+		summarizeBy: sum
+		sourceColumn: justified_by_inflation_pct
+
+		annotation SummarizationSetBy = Automatic
+
+	column unexplained_pct
+		dataType: double
+		formatString: 0.00\ %;-0.00\ %;0.00\ %
+		lineageTag: c5996377-fff4-4117-a380-c028f3b717ea
+		summarizeBy: sum
+		sourceColumn: unexplained_pct
+
+		annotation SummarizationSetBy = Automatic
+
+	column spend_since_letter_eur
+		dataType: double
+		lineageTag: 0409ebb1-209a-458c-9415-65fecebc6eb1
+		summarizeBy: sum
+		sourceColumn: spend_since_letter_eur
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column should_cost_since_letter_eur
+		dataType: double
+		lineageTag: f1d2aee4-713b-4ad0-826f-1989fe3b3768
+		summarizeBy: sum
+		sourceColumn: should_cost_since_letter_eur
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column unexplained_eur
+		dataType: double
+		lineageTag: 4b3a6c70-b31f-4e70-8b86-4453ba915eba
+		summarizeBy: sum
+		sourceColumn: unexplained_eur
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column annualised_spend_eur
+		dataType: double
+		lineageTag: 3ffb87e5-2757-4ed2-a2cc-f191e9753ef7
+		summarizeBy: sum
+		sourceColumn: annualised_spend_eur
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column annualised_unexplained_eur
+		dataType: double
+		formatString: #,0\ "€";-#,0\ "€";#,0\ "€"
+		lineageTag: 80010690-1558-4782-8ce3-ae34d9a2c3ba
+		summarizeBy: sum
+		sourceColumn: annualised_unexplained_eur
+
+		annotation SummarizationSetBy = Automatic
+
+	column justification_text
+		dataType: string
+		lineageTag: 4bf8eb2a-962b-45de-b083-a90cb52243c5
+		summarizeBy: none
+		sourceColumn: justification_text
+
+		annotation SummarizationSetBy = Automatic
+
+	column months_since_letter
+		dataType: string
+		lineageTag: 090b031a-8b60-4d58-a111-df1c32764568
+		summarizeBy: none
+		sourceColumn: months_since_letter
+
+		annotation SummarizationSetBy = Automatic
+
+	column material_flag
+		dataType: string
+		lineageTag: fd72b4c3-237d-4cc2-8adc-5bb471532584
+		summarizeBy: none
+		sourceColumn: material_flag
+
+		annotation SummarizationSetBy = Automatic
+
+	partition fact_surcharge_claims = m
+		mode: import
+		queryGroup: 01_Facts
+		source =
+				let
+				    Source = stg_gold_folder,
+				    Content = Source{[Name = "fact_surcharge_claims.csv"]}[Content],
+				    #"Imported CSV" = Csv.Document(Content,[Delimiter=",", Columns=16, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(#"Imported CSV", [PromoteAllScalars=true]),
+				    #"Changed Type with Locale" = Table.TransformColumnTypes(#"Promoted Headers", {{"claimed_surcharge_pct", type number}, {"justified_by_index_pct", type number}, {"justified_by_inflation_pct", type number}, {"unexplained_pct", type number}}, "en-US"),
+				    #"Changed Type with Locale1" = Table.TransformColumnTypes(#"Changed Type with Locale", {{"tier1_id", type text}, {"spend_since_letter_eur", type number}, {"should_cost_since_letter_eur", type number}, {"unexplained_eur", type number}, {"annualised_spend_eur", type number}, {"annualised_unexplained_eur", type number}}, "en-US")
+				in
+				    #"Changed Type with Locale1"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

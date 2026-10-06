@@ -1,0 +1,92 @@
+table dim_part
+	lineageTag: de4cc993-d337-4504-a4c3-ffb4848d4dc3
+
+	column part_id
+		dataType: string
+		lineageTag: 91c26cc6-e457-460b-84cb-921e47384c27
+		summarizeBy: none
+		sourceColumn: part_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column part_description
+		dataType: string
+		lineageTag: 6d7f89f8-bee8-4a7d-8a23-f09ab2667156
+		summarizeBy: none
+		sourceColumn: part_description
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_family
+		dataType: string
+		lineageTag: bd052a98-dc02-42b6-92e5-2fb84fb5439d
+		summarizeBy: none
+		sourceColumn: product_family
+
+		annotation SummarizationSetBy = Automatic
+
+	column current_rating_a
+		dataType: int64
+		formatString: 0
+		lineageTag: b2ba6e9b-e35f-4576-b529-3da8942779ce
+		summarizeBy: none
+		sourceColumn: current_rating_a
+
+		annotation SummarizationSetBy = Automatic
+
+	column primary_tier1_id
+		dataType: string
+		lineageTag: 01ef7cbe-9201-449e-8edd-d0e42b170323
+		summarizeBy: none
+		sourceColumn: primary_tier1_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column annual_volume_units
+		dataType: int64
+		formatString: 0
+		lineageTag: 6fc2289a-be11-4e61-b32d-4bf8a3af9094
+		summarizeBy: none
+		sourceColumn: annual_volume_units
+
+		annotation SummarizationSetBy = Automatic
+
+	column standard_cost_eur
+		dataType: double
+		lineageTag: d8c541d7-1847-4131-b187-53c2ce13ebab
+		summarizeBy: none
+		sourceColumn: standard_cost_eur
+
+		annotation SummarizationSetBy = Automatic
+
+	column target_gross_margin_pct
+		dataType: double
+		lineageTag: c21a60b5-007a-4944-b7e5-82768e10b116
+		summarizeBy: none
+		sourceColumn: target_gross_margin_pct
+
+		annotation SummarizationSetBy = Automatic
+
+	column lifecycle_stage
+		dataType: string
+		lineageTag: 12ba4d80-ea17-4819-84fa-1d7ba4272502
+		summarizeBy: none
+		sourceColumn: lifecycle_stage
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_part = m
+		mode: import
+		queryGroup: 02_Dimensions
+		source =
+				let
+				    Source = Csv.Document(File.Contents(DataFolder & "raw\dim_part.csv"),[Delimiter=",", Columns=9, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"part_id", type text}, {"part_description", type text}, {"product_family", type text}, {"current_rating_a", Int64.Type}, {"primary_tier1_id", type text}, {"annual_volume_units", Int64.Type}, {"standard_cost_eur", type number}, {"target_gross_margin_pct", type number}, {"lifecycle_stage", type text}}, "en-US")
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

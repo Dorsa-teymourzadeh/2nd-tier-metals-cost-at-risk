@@ -1,0 +1,394 @@
+table dim_supplier_tier2_risk
+	lineageTag: 64e62226-35dd-4405-90c4-e7e0fd746b10
+
+	column t2_entity_id
+		dataType: string
+		lineageTag: 5f6d0ba4-9031-4022-98ed-b61b7cda2cdf
+		summarizeBy: none
+		sourceColumn: t2_entity_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column golden_name
+		dataType: string
+		lineageTag: b1e39108-a8ef-4870-adb9-51b629c6bf70
+		summarizeBy: none
+		sourceColumn: golden_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column country_code
+		dataType: string
+		lineageTag: 1b36fa29-2fe5-410f-91f3-2cd3a0c680e2
+		summarizeBy: none
+		sourceColumn: country_code
+
+		annotation SummarizationSetBy = Automatic
+
+	column supplied_metal_id
+		dataType: string
+		lineageTag: b6dbdd0b-5449-4037-bfcf-e18d0579883d
+		summarizeBy: none
+		sourceColumn: supplied_metal_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column tier2_role
+		dataType: string
+		lineageTag: 512b0dbd-a837-4169-9b62-694b0ffab118
+		summarizeBy: none
+		sourceColumn: tier2_role
+
+		annotation SummarizationSetBy = Automatic
+
+	column n_raw_variants
+		dataType: int64
+		formatString: 0
+		lineageTag: b0d60c8e-1072-4f94-8e2f-7f4d2937b969
+		summarizeBy: sum
+		sourceColumn: n_raw_variants
+
+		annotation SummarizationSetBy = Automatic
+
+	column source_systems
+		dataType: string
+		lineageTag: 9f71c68e-fd68-4303-ad36-0d10f379deb8
+		summarizeBy: none
+		sourceColumn: source_systems
+
+		annotation SummarizationSetBy = Automatic
+
+	column allocated_spend_eur
+		dataType: double
+		lineageTag: 1615a2cd-f16e-476f-b456-38e0123e69a3
+		summarizeBy: sum
+		sourceColumn: allocated_spend_eur
+
+		annotation SummarizationSetBy = Automatic
+
+	column n_tier1_dependent
+		dataType: int64
+		formatString: 0
+		lineageTag: d56fbae8-546d-4fb2-82d5-5083ee68be27
+		summarizeBy: sum
+		sourceColumn: n_tier1_dependent
+
+		annotation SummarizationSetBy = Automatic
+
+	column n_declared_aliases
+		dataType: int64
+		formatString: 0
+		lineageTag: 7c375e31-f960-4a95-85cd-e61ff3abb0b1
+		summarizeBy: sum
+		sourceColumn: n_declared_aliases
+
+		annotation SummarizationSetBy = Automatic
+
+	column unverified_spend_eur
+		dataType: double
+		lineageTag: 818d54f0-71a2-4d7b-8b80-ff902912f55e
+		summarizeBy: sum
+		sourceColumn: unverified_spend_eur
+
+		annotation SummarizationSetBy = Automatic
+
+	column share_of_allocated_spend
+		dataType: double
+		lineageTag: ef3167e2-9ff6-4d96-9517-aa7d0391f43f
+		summarizeBy: sum
+		sourceColumn: share_of_allocated_spend
+
+		annotation SummarizationSetBy = Automatic
+
+	column hidden_by_aliasing_flag
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 679a1a47-db8c-4ad1-ae08-a6d01283347e
+		summarizeBy: none
+		sourceColumn: hidden_by_aliasing_flag
+
+		annotation SummarizationSetBy = Automatic
+
+	column allocated_metal_kg
+		dataType: double
+		lineageTag: 938ff6c6-2483-4d8f-8a78-428a371d6d67
+		summarizeBy: sum
+		sourceColumn: allocated_metal_kg
+
+		annotation SummarizationSetBy = Automatic
+
+	column cbam_liable_metal_kg
+		dataType: double
+		lineageTag: 60248e86-d997-454d-8a2e-517e86904d69
+		summarizeBy: sum
+		sourceColumn: cbam_liable_metal_kg
+
+		annotation SummarizationSetBy = Automatic
+
+	column eu_member_flag
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: aa862361-8390-4e93-995d-c5a922f08a35
+		summarizeBy: none
+		sourceColumn: eu_member_flag
+
+		annotation SummarizationSetBy = Automatic
+
+	column import_flag
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: d0ba7f73-3cc9-49bb-bbe1-109c141a3bd1
+		summarizeBy: none
+		sourceColumn: import_flag
+
+		annotation SummarizationSetBy = Automatic
+
+	column cyber_maturity_score
+		dataType: double
+		lineageTag: 10699718-5394-488a-9874-641967eae7f2
+		summarizeBy: sum
+		sourceColumn: cyber_maturity_score
+
+		annotation SummarizationSetBy = Automatic
+
+	column iso27001_flag
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 55d02cb1-d814-46e1-8d3d-1bc60119a3b2
+		summarizeBy: none
+		sourceColumn: iso27001_flag
+
+		annotation SummarizationSetBy = Automatic
+
+	column secure_data_exchange_flag
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: aca1989e-8b15-4378-b37a-5eae946d8d38
+		summarizeBy: none
+		sourceColumn: secure_data_exchange_flag
+
+		annotation SummarizationSetBy = Automatic
+
+	column nis2_in_scope
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 6be08788-c805-4b67-8ab5-26f5e0aa598a
+		summarizeBy: none
+		sourceColumn: nis2_in_scope
+
+		annotation SummarizationSetBy = Automatic
+
+	column cyber_incidents_24m
+		dataType: int64
+		formatString: 0
+		lineageTag: c40ac421-091e-498a-862c-52cf13011b0f
+		summarizeBy: sum
+		sourceColumn: cyber_incidents_24m
+
+		annotation SummarizationSetBy = Automatic
+
+	column audit_overdue_flag
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 06e2ae9a-6f7c-40c4-a10e-4e546cf0e378
+		summarizeBy: none
+		sourceColumn: audit_overdue_flag
+
+		annotation SummarizationSetBy = Automatic
+
+	column lksg_risk_class
+		dataType: string
+		lineageTag: a2ae38ed-1f6e-44be-8c61-9894c3b9cbbe
+		summarizeBy: none
+		sourceColumn: lksg_risk_class
+
+		annotation SummarizationSetBy = Automatic
+
+	column co2e_kg_per_kg_metal
+		dataType: double
+		lineageTag: 1bca11da-109e-4568-8899-b9e41d729fa2
+		summarizeBy: sum
+		sourceColumn: co2e_kg_per_kg_metal
+
+		annotation SummarizationSetBy = Automatic
+
+	column renewable_energy_pct
+		dataType: double
+		lineageTag: 5295110e-d255-4d54-9e5d-8d7156c7e7a6
+		summarizeBy: sum
+		sourceColumn: renewable_energy_pct
+
+		annotation SummarizationSetBy = Automatic
+
+	column cbam_relevant
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: be4d89af-ab65-41bd-97a1-5e114d1ca9ca
+		summarizeBy: none
+		sourceColumn: cbam_relevant
+
+		annotation SummarizationSetBy = Automatic
+
+	column conflict_minerals_declared
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 98acb806-8776-41ac-9b90-1ac191adcfa1
+		summarizeBy: none
+		sourceColumn: conflict_minerals_declared
+
+		annotation SummarizationSetBy = Automatic
+
+	column country_name
+		dataType: string
+		lineageTag: 6fef2e2c-eee6-418e-82f3-14d98d368370
+		summarizeBy: none
+		sourceColumn: country_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column region
+		dataType: string
+		lineageTag: 94ed4a9c-353c-4fb2-be7e-41abc5b52fad
+		summarizeBy: none
+		sourceColumn: region
+
+		annotation SummarizationSetBy = Automatic
+
+	column geopolitical_risk_index
+		dataType: double
+		lineageTag: 46679300-d59b-4c9c-99be-2d19e11901bf
+		summarizeBy: sum
+		sourceColumn: geopolitical_risk_index
+
+		annotation SummarizationSetBy = Automatic
+
+	column logistics_risk_index
+		dataType: double
+		lineageTag: 250599cd-46f8-43d4-8c3a-aeaa33a03848
+		summarizeBy: sum
+		sourceColumn: logistics_risk_index
+
+		annotation SummarizationSetBy = Automatic
+
+	column export_control_flag
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 12d72a9e-d25f-4348-a7b5-4c8860d6eef0
+		summarizeBy: none
+		sourceColumn: export_control_flag
+
+		annotation SummarizationSetBy = Automatic
+
+	column resource_nationalism_score
+		dataType: double
+		lineageTag: da55be1e-951f-46e5-83dc-9a18981dc2bb
+		summarizeBy: sum
+		sourceColumn: resource_nationalism_score
+
+		annotation SummarizationSetBy = Automatic
+
+	column n_disruptions_36m
+		dataType: double
+		lineageTag: 5d7d87f8-9cff-44b1-bb30-b537a9ed93e0
+		summarizeBy: sum
+		sourceColumn: n_disruptions_36m
+
+		annotation SummarizationSetBy = Automatic
+
+	column max_severity_score
+		dataType: double
+		lineageTag: 677879b4-cc17-442f-90c2-80e1081d869e
+		summarizeBy: sum
+		sourceColumn: max_severity_score
+
+		annotation SummarizationSetBy = Automatic
+
+	column max_lead_time_impact_days
+		dataType: double
+		lineageTag: 98e41fdd-a20f-4b95-907d-5bae0508d371
+		summarizeBy: sum
+		sourceColumn: max_lead_time_impact_days
+
+		annotation SummarizationSetBy = Automatic
+
+	column concentration_component
+		dataType: double
+		lineageTag: d4bf9feb-01a1-4b69-a652-3c330bdc6fce
+		summarizeBy: sum
+		sourceColumn: concentration_component
+
+		annotation SummarizationSetBy = Automatic
+
+	column cyber_component
+		dataType: double
+		lineageTag: 35b17c2c-62b9-4ef1-9be4-b70ecb23c138
+		summarizeBy: sum
+		sourceColumn: cyber_component
+
+		annotation SummarizationSetBy = Automatic
+
+	column geopolitical_component
+		dataType: double
+		lineageTag: 0af42a62-4692-4c9e-87a7-3fb20d4aa18d
+		summarizeBy: sum
+		sourceColumn: geopolitical_component
+
+		annotation SummarizationSetBy = Automatic
+
+	column compliance_component
+		dataType: double
+		lineageTag: de2324c8-e919-4863-ab2e-130801e01a8b
+		summarizeBy: sum
+		sourceColumn: compliance_component
+
+		annotation SummarizationSetBy = Automatic
+
+	column composite_risk_score
+		dataType: double
+		lineageTag: 8f53ddaa-886e-4ef0-bfb5-ada1f5b9370a
+		summarizeBy: sum
+		sourceColumn: composite_risk_score
+
+		annotation SummarizationSetBy = Automatic
+
+	column risk_tier
+		dataType: string
+		lineageTag: 16db94b4-2e05-4cc2-981a-ed6c05edf7e9
+		summarizeBy: none
+		sourceColumn: risk_tier
+
+		annotation SummarizationSetBy = Automatic
+
+	column spend_weighted_risk_eur
+		dataType: double
+		lineageTag: f4922a87-2da5-41d7-8ec7-cc0d1dbc86c5
+		summarizeBy: sum
+		sourceColumn: spend_weighted_risk_eur
+
+		annotation SummarizationSetBy = Automatic
+
+	column primary_risk_driver
+		dataType: string
+		lineageTag: 99374ad1-5926-4c15-a6cd-997e123343cd
+		summarizeBy: none
+		sourceColumn: primary_risk_driver
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_supplier_tier2_risk = m
+		mode: import
+		queryGroup: 02_Dimensions
+		source =
+				let
+				    Source = stg_gold_folder,
+				    Content = Source{[Name = "dim_supplier_tier2_risk.csv"]}[Content],
+				    #"Imported CSV" = Csv.Document(Content,[Delimiter=",", Columns=45, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(#"Imported CSV", [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"t2_entity_id", type text}, {"golden_name", type text}, {"country_code", type text}, {"supplied_metal_id", type text}, {"tier2_role", type text}, {"n_raw_variants", Int64.Type}, {"source_systems", type text}, {"allocated_spend_eur", type number}, {"n_tier1_dependent", Int64.Type}, {"n_declared_aliases", Int64.Type}, {"unverified_spend_eur", type number}, {"share_of_allocated_spend", type number}, {"hidden_by_aliasing_flag", type logical}, {"allocated_metal_kg", type number}, {"cbam_liable_metal_kg", type number}, {"eu_member_flag", type logical}, {"import_flag", type logical}, {"cyber_maturity_score", type number}, {"iso27001_flag", type logical}, {"secure_data_exchange_flag", type logical}, {"nis2_in_scope", type logical}, {"cyber_incidents_24m", Int64.Type}, {"audit_overdue_flag", type logical}, {"lksg_risk_class", type text}, {"co2e_kg_per_kg_metal", type number}, {"renewable_energy_pct", type number}, {"cbam_relevant", type logical}, {"conflict_minerals_declared", type logical}, {"country_name", type text}, {"region", type text}, {"geopolitical_risk_index", type number}, {"logistics_risk_index", type number}, {"export_control_flag", type logical}, {"resource_nationalism_score", type number}, {"n_disruptions_36m", type number}, {"max_severity_score", type number}, {"max_lead_time_impact_days", type number}, {"concentration_component", type number}, {"cyber_component", type number}, {"geopolitical_component", type number}, {"compliance_component", type number}, {"composite_risk_score", type number}, {"risk_tier", type text}, {"spend_weighted_risk_eur", type number}, {"primary_risk_driver", type text}}, "en-US")
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

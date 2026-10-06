@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "Commodity_Management"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "bd00c807-3021-42f9-b1b6-53c998102ce4"
+  }
+}

@@ -1,0 +1,7 @@
+﻿metal_id,metal_name,exchange,quote_currency,quote_unit,base_price_quote_ccy,annual_volatility_pct,criticality,cbam_in_scope,conflict_mineral_flag
+COPPER,Copper Grade A Cathode,LME,USD,USD/t,8500.0,10.4,High,False,False
+ALUMINIUM,Aluminium P1020A Primary,LME,USD,USD/t,2400.0,11.1,High,True,False
+STEEL_HRC,Steel Hot-Rolled Coil NW-EU,Platts,EUR,EUR/t,750.0,8.7,Medium,True,False
+ZINC,Zinc Special High Grade,LME,USD,USD/t,2650.0,9.7,Medium,False,False
+NICKEL,Nickel Primary 99.8%,LME,USD,USD/t,18000.0,13.9,High,False,False
+SILVER,Silver 999 Contact Alloy,COMEX,USD,USD/t,760000.0,12.1,Critical,False,True

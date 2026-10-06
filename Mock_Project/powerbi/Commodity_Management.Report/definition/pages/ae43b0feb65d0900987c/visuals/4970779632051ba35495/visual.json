@@ -1,0 +1,117 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.5.0/schema.json",
+  "name": "4970779632051ba35495",
+  "position": {
+    "x": 644.17391304347825,
+    "y": 197.56521739130434,
+    "z": 10000,
+    "height": 249.04347826086956,
+    "width": 614.95652173913038,
+    "tabOrder": 10000
+  },
+  "visual": {
+    "visualType": "columnChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_cost_at_risk"
+                    }
+                  },
+                  "Property": "Expiry Bucket"
+                }
+              },
+              "queryRef": "fact_cost_at_risk.Expiry Bucket",
+              "nativeQueryRef": "Expiry Bucket",
+              "active": true
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Measures_Cost-at-Risk"
+                    }
+                  },
+                  "Property": "Cost at Risk (12m)"
+                }
+              },
+              "queryRef": "Measures_Cost-at-Risk.Cost at Risk (12m)",
+              "nativeQueryRef": "Cost at Risk (12m)"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Measures_Cost-at-Risk"
+                    }
+                  },
+                  "Property": "Clause Leakage"
+                }
+              },
+              "queryRef": "Measures_Cost-at-Risk.Clause Leakage",
+              "nativeQueryRef": "Clause Leakage"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Measures_Cost-at-Risk"
+                    }
+                  },
+                  "Property": "Reset Lag Cost"
+                }
+              },
+              "queryRef": "Measures_Cost-at-Risk.Reset Lag Cost",
+              "nativeQueryRef": "Reset Lag Cost"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "fact_cost_at_risk"
+                  }
+                },
+                "Property": "Expiry Bucket"
+              }
+            },
+            "direction": "Ascending"
+          }
+        ]
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Cost-at-Risk by Contract Expiry'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

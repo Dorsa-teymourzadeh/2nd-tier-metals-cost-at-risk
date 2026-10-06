@@ -1,0 +1,84 @@
+table Measures_Cost-at-Risk
+	lineageTag: 9996b9bb-aa5d-4c8d-a721-be96ea342ff4
+
+	measure 'Cost at Risk (12m)' = SUM ( fact_cost_at_risk[cost_at_risk_12m_eur] )
+		formatString: #,0\ "€";-#,0\ "€";#,0\ "€"
+		lineageTag: 2f1ec597-02e1-4dd0-ab84-8dfb5d9f5758
+
+	measure 'Clause Leakage' = SUM ( fact_cost_at_risk[clause_leakage_eur] )
+		formatString: 0
+		lineageTag: 84698129-aaad-4696-b6ec-d6d3926d0f50
+
+	measure 'Reset Lag Cost' = SUM ( fact_cost_at_risk[reset_lag_cost_eur] )
+		formatString: 0
+		lineageTag: 66667ea3-2349-4bf0-a9e3-ed3992c7bbb5
+
+	measure 'Unjustified Surcharge (Annualised)' =
+			
+			CALCULATE (
+			    SUM ( fact_surcharge_claims[annualised_unexplained_eur] ),
+			    fact_surcharge_claims[material_flag] = "True"
+			)
+		formatString: 0
+		lineageTag: 44a58314-6b96-4fa9-b2fa-3be27f504fa4
+
+	measure 'Total Addressable' =
+			
+			[Unjustified Surcharge (Annualised)]
+			    + [Cost at Risk (12m)]
+			    + [Clause Leakage]
+			    + [Reset Lag Cost]
+		formatString: #,0.0\ "€";-#,0.0\ "€";#,0.0\ "€"
+		lineageTag: a0ebf7fe-5ca3-4810-8514-29bd69f6d37d
+
+	measure 'Addressable % of Spend' = DIVIDE ( [Total Addressable], [Purchasing Spend] )
+		lineageTag: afa922be-c743-4e59-93ad-e904c2098a07
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Spend Expiring Within 12m' =
+			
+			CALCULATE (
+			    SUM ( fact_cost_at_risk[spend_12m_eur] ),
+			    fact_cost_at_risk[months_to_expiry] > 0,
+			    fact_cost_at_risk[months_to_expiry] <= 12
+			)
+		formatString: 0
+		lineageTag: c7aeeacd-77b5-46c6-bff7-a97b6ec54863
+
+	measure 'Contracts Expiring Within 6m' =
+			
+			CALCULATE (
+			    COUNTROWS ( fact_cost_at_risk ),
+			    fact_cost_at_risk[months_to_expiry] > 0,
+			    fact_cost_at_risk[months_to_expiry] <= 6
+			)
+		formatString: 0
+		lineageTag: d7281a81-cbbc-499c-947f-2ca98a80cfe8
+
+	measure 'Repricing Exposure' = SUM ( fact_cost_at_risk[repricing_exposure_eur] )
+		formatString: 0
+		lineageTag: ccde7d20-ff14-4556-9fc4-a9e348db4b8b
+
+	column Column1
+		dataType: string
+		isHidden
+		lineageTag: 80483f94-2e37-4cd4-87e3-824d911b0d69
+		summarizeBy: none
+		sourceColumn: Column1
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Measures_Cost-at-Risk = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i44FAA==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Column1 = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Column1", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

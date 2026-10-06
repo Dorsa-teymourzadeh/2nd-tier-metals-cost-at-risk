@@ -1,0 +1,120 @@
+table fact_ntier_coverage
+	lineageTag: 153cfc32-f1c8-4792-b908-24d7dd537df0
+
+	column tier1_id
+		dataType: string
+		lineageTag: 5027b381-ecdc-41d3-9285-cb8ef478aa4d
+		summarizeBy: none
+		sourceColumn: tier1_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column metal_id
+		dataType: string
+		lineageTag: d4622a5d-1ea8-4862-83cc-2815627dd4f8
+		summarizeBy: none
+		sourceColumn: metal_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column tier1_metal_spend_eur
+		dataType: double
+		formatString: 0
+		lineageTag: fd5575b4-3b21-4359-81cf-5c4d3ef333c2
+		summarizeBy: sum
+		sourceColumn: tier1_metal_spend_eur
+
+		annotation SummarizationSetBy = Automatic
+
+	column tier1_metal_kg
+		dataType: double
+		formatString: 0
+		lineageTag: 8e3f37dc-01d7-4a14-b912-0b694cf5a449
+		summarizeBy: sum
+		sourceColumn: tier1_metal_kg
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_covered
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: a97adfde-eb0a-4ac9-9c4e-f390fb6eecba
+		summarizeBy: none
+		sourceColumn: is_covered
+
+		annotation SummarizationSetBy = Automatic
+
+	column declared_share_sum
+		dataType: double
+		formatString: 0
+		lineageTag: 269eec5c-172c-4898-ab07-df138fe02e10
+		summarizeBy: sum
+		sourceColumn: declared_share_sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column covered_spend_eur
+		dataType: double
+		formatString: 0
+		lineageTag: 3cdb7f05-b361-4ddd-872b-9556b899946b
+		summarizeBy: sum
+		sourceColumn: covered_spend_eur
+
+		annotation SummarizationSetBy = Automatic
+
+	column over_declared_flag
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: a4c1356c-9451-458d-9e63-9c164ddb0aa4
+		summarizeBy: none
+		sourceColumn: over_declared_flag
+
+		annotation SummarizationSetBy = Automatic
+
+	column effective_share
+		dataType: double
+		lineageTag: 854d338f-e813-4b68-8509-b02a2de932c4
+		summarizeBy: sum
+		sourceColumn: effective_share
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column blind_spend_eur
+		dataType: double
+		lineageTag: 3b8f1d6e-92a4-4c57-b0e3-6f1a8d2c4e71
+		summarizeBy: sum
+		sourceColumn: blind_spend_eur
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column coverage_ratio
+		dataType: double
+		lineageTag: 9e2c7a41-5d38-4f0b-a6c9-1b7e3f8d2a50
+		summarizeBy: none
+		sourceColumn: coverage_ratio
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition fact_ntier_coverage = m
+		mode: import
+		queryGroup: 01_Facts
+		source =
+				let
+				    Source = stg_gold_folder,
+				    Content = Source{[Name = "fact_ntier_coverage.csv"]}[Content],
+				    #"Imported CSV" = Csv.Document(Content,[Delimiter=",", Columns=11, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(#"Imported CSV", [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"tier1_id", type text}, {"metal_id", type text}, {"tier1_metal_spend_eur", type number}, {"tier1_metal_kg", type number}, {"is_covered", type logical}, {"declared_share_sum", type number}, {"over_declared_flag", type logical}, {"effective_share", type number}, {"covered_spend_eur", type number}, {"blind_spend_eur", type number}, {"coverage_ratio", type number}}, "en-US")
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

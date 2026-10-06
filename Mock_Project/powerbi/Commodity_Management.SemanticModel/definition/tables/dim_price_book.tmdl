@@ -1,0 +1,122 @@
+table dim_price_book
+	lineageTag: afdd07a4-3079-485f-bf4d-71f77afc95b4
+
+	column metal_id
+		dataType: string
+		lineageTag: 28fe50f9-d482-4a36-8074-27ed5bc30b3c
+		summarizeBy: none
+		sourceColumn: metal_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column year_month
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: c21bce09-1208-4b45-8e47-16494fde23a3
+		summarizeBy: none
+		sourceColumn: year_month
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column month_index
+		dataType: int64
+		formatString: 0
+		lineageTag: 6329a10e-4743-4c28-a792-11a4e4248cc1
+		summarizeBy: sum
+		sourceColumn: month_index
+
+		annotation SummarizationSetBy = Automatic
+
+	column quote_currency
+		dataType: string
+		lineageTag: 70bda5b1-f9df-478a-b40b-6c17a937023d
+		summarizeBy: none
+		sourceColumn: quote_currency
+
+		annotation SummarizationSetBy = Automatic
+
+	column settlement_price
+		dataType: double
+		lineageTag: 76e57431-c551-4501-a14b-6c9905979600
+		summarizeBy: sum
+		sourceColumn: settlement_price
+
+		annotation SummarizationSetBy = Automatic
+
+	column eur_per_unit
+		dataType: double
+		lineageTag: 62598a7c-2f7e-43fb-b6e6-6d062b1441e5
+		summarizeBy: sum
+		sourceColumn: eur_per_unit
+
+		annotation SummarizationSetBy = Automatic
+
+	column price_eur_per_t
+		dataType: double
+		lineageTag: e4c4508b-adfc-427a-b265-3f04cdf4600d
+		summarizeBy: sum
+		sourceColumn: price_eur_per_t
+
+		annotation SummarizationSetBy = Automatic
+
+	column eur_per_kg
+		dataType: double
+		lineageTag: e8395568-6222-4381-8220-c27d19fe18dc
+		summarizeBy: sum
+		sourceColumn: eur_per_kg
+
+		annotation SummarizationSetBy = Automatic
+
+	column base_eur_per_kg
+		dataType: double
+		lineageTag: 4377d80d-235e-441d-b145-de5368f38914
+		summarizeBy: sum
+		sourceColumn: base_eur_per_kg
+
+		annotation SummarizationSetBy = Automatic
+
+	column index_move_vs_base
+		dataType: double
+		lineageTag: e49da414-9ef3-4f01-9d35-eaf948f559d6
+		summarizeBy: sum
+		sourceColumn: index_move_vs_base
+
+		annotation SummarizationSetBy = Automatic
+
+	column idx_move_quote_ccy
+		dataType: double
+		lineageTag: cda71301-491d-45ab-bc6e-4af228226ac1
+		summarizeBy: sum
+		sourceColumn: idx_move_quote_ccy
+
+		annotation SummarizationSetBy = Automatic
+
+	column fx_amplification
+		dataType: double
+		lineageTag: 1a6c957d-5758-4cb8-97c5-bf41956bbf4a
+		summarizeBy: sum
+		sourceColumn: fx_amplification
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition dim_price_book = m
+		mode: import
+		queryGroup: 02_Dimensions
+		source =
+				let
+				    Source = stg_gold_folder,
+				    Content = Source{[Name = "dim_price_book.csv"]}[Content],
+				    #"Imported CSV" = Csv.Document(Content,[Delimiter=",", Columns=12, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(#"Imported CSV", [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"metal_id", type text}, {"year_month", type date}, {"month_index", Int64.Type}, {"quote_currency", type text}, {"settlement_price", type number}, {"eur_per_unit", type number}, {"price_eur_per_t", type number}, {"eur_per_kg", type number}, {"base_eur_per_kg", type number}, {"index_move_vs_base", type number}, {"idx_move_quote_ccy", type number}, {"fx_amplification", type number}}, "en-US")
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

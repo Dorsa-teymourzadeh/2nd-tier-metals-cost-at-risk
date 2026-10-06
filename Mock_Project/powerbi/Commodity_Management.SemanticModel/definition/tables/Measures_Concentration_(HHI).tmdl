@@ -1,0 +1,85 @@
+table Measures_Concentration_(HHI)
+	lineageTag: 2ed82ee9-908d-4280-a50f-56da57dd9403
+
+	measure 'HHI (Resolved)' =
+			
+			VAR Total = [Allocated Tier-2 Spend]
+			RETURN
+			    IF (
+			        Total > 0,
+			        SUMX (
+			            VALUES ( fact_tier2_allocation[t2_entity_id] ),
+			            VAR EntityShare = DIVIDE ( [Allocated Tier-2 Spend], Total )
+			            RETURN EntityShare * EntityShare
+			        ) * 10000
+			    )
+		lineageTag: b0e80524-67e7-4871-8f0c-0c184ba04754
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'HHI (As Declared)' =
+			
+			VAR Total = [Allocated Tier-2 Spend]
+			RETURN
+			    IF (
+			        Total > 0,
+			        SUMX (
+			            VALUES ( fact_tier2_allocation[declared_supplier_name] ),
+			            VAR NameShare = DIVIDE ( [Allocated Tier-2 Spend], Total )
+			            RETURN NameShare * NameShare
+			        ) * 10000
+			    )
+		lineageTag: 519583c8-63a5-4c31-932e-8d1135a9a8e7
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'HHI Understatement' = [HHI (Resolved)] - [HHI (As Declared)]
+		lineageTag: 904ce4cb-9ecf-4e59-a53e-6576d6e5aae2
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Concentration Verdict' =
+			
+			SWITCH (
+			    TRUE (),
+			    ISBLANK ( [HHI (Resolved)] ),      "No allocated spend",
+			    [HHI (Resolved)] >= 2500,          "Highly concentrated",
+			    [HHI (Resolved)] >= 1500,          "Moderately concentrated",
+			    "Competitive"
+			)
+		lineageTag: 40bf6376-f17a-4681-879d-621f62bc8cce
+
+	measure 'Largest Entity Share' =
+			
+			VAR Total = [Allocated Tier-2 Spend]
+			RETURN
+			    DIVIDE (
+			        MAXX ( VALUES ( fact_tier2_allocation[t2_entity_id] ), [Allocated Tier-2 Spend] ),
+			        Total
+			    )
+		lineageTag: e5014c11-c839-41aa-a2b6-7f03467ceafa
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Column1
+		dataType: string
+		isHidden
+		lineageTag: 5c57a5d3-35b0-4a8b-b84b-a0ffd81827cb
+		summarizeBy: none
+		sourceColumn: Column1
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Measures_Concentration_(HHI) = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i44FAA==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Column1 = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Column1", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

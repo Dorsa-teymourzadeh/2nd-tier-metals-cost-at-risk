@@ -1,0 +1,96 @@
+table 'Measures_Tier-2 Risk'
+	lineageTag: d850ae66-cab7-4b5a-996d-2dde6a23da2d
+
+	measure 'Spend-Weighted Risk' = SUM ( dim_supplier_tier2_risk[spend_weighted_risk_eur] )
+		formatString: 0
+		lineageTag: d0314f23-b7c2-4502-8b6a-ec002e73f705
+
+	measure 'Composite Risk (Spend-Weighted)' =
+			
+			DIVIDE (
+			    SUMX (
+			        dim_supplier_tier2_risk,
+			        dim_supplier_tier2_risk[composite_risk_score]
+			            * dim_supplier_tier2_risk[allocated_spend_eur]
+			    ),
+			    SUM ( dim_supplier_tier2_risk[allocated_spend_eur] )
+			)
+		lineageTag: 5fb18a2d-875e-4724-b19a-78f4d7de7e57
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Critical Entities' =
+			
+			CALCULATE (
+			    COUNTROWS ( dim_supplier_tier2_risk ),
+			    dim_supplier_tier2_risk[risk_tier] = "Critical"
+			)
+		formatString: 0
+		lineageTag: dac6c18c-4678-437a-b750-eadabbd4a68b
+
+	measure 'Metal Value Below Cyber Line' =
+			
+			CALCULATE (
+			    SUM ( dim_supplier_tier2_risk[allocated_spend_eur] ),
+			    dim_supplier_tier2_risk[cyber_maturity_score] < 50
+			)
+		formatString: 0
+		lineageTag: 7d3339a4-381a-4bb8-aa2b-186debe76c49
+
+	measure 'Cyber-Exposed Share' =
+			
+			DIVIDE (
+			    [Metal Value Below Cyber Line],
+			    CALCULATE (
+			        SUM ( dim_supplier_tier2_risk[allocated_spend_eur] ),
+			        REMOVEFILTERS ( dim_supplier_tier2_risk[cyber_maturity_score] )
+			    )
+			)
+		lineageTag: 908a7f97-45ca-46e7-a82f-70fd36a1e7ef
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Hidden Single-Source Entities' =
+			
+			CALCULATE (
+			    COUNTROWS ( dim_supplier_tier2_risk ),
+			    dim_supplier_tier2_risk[hidden_by_aliasing_flag] = TRUE ()
+			)
+		formatString: 0
+		lineageTag: acd8efda-14d4-4803-a6e5-19d9dd2e5bdf
+
+	measure 'Max Tier-1 Behind One Entity' = MAX ( dim_supplier_tier2_risk[n_tier1_dependent] )
+		formatString: 0
+		lineageTag: c9a4e154-5181-4ce6-abb2-d00156a97c47
+
+	measure 'Entities With Overdue Audit' =
+			
+			CALCULATE (
+			    COUNTROWS ( dim_supplier_tier2_risk ),
+			    dim_supplier_tier2_risk[audit_overdue_flag] = TRUE ()
+			)
+		formatString: 0
+		lineageTag: 4d1f6bc6-33ad-4251-a7c3-09e6dbc090d8
+
+	column Column1
+		dataType: string
+		isHidden
+		lineageTag: 9f4df3c7-be85-4209-adbe-506fc4a195c5
+		summarizeBy: none
+		sourceColumn: Column1
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Measures_Tier-2 Risk' = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i44FAA==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Column1 = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Column1", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

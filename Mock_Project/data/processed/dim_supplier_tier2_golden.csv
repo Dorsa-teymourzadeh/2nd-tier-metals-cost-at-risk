@@ -1,0 +1,21 @@
+﻿t2_entity_id,golden_name,golden_name_normalised,country_code,supplied_metal_id,tier2_role,n_raw_variants,source_systems,surviving_source,first_seen_date,min_intra_cluster_score,singleton_flag
+T2E-001,"Yunnan Hongtai Aluminium Smelting Co., Ltd.",yunnan hongtai aluminium smelting,CN,ALUMINIUM,Smelter,4,ERP_SAP|SUPPLIER_SURVEY|SUSTAINABILITY_PORTAL,ERP_SAP,2023-02-03,1.0,False
+T2E-002,Müller & Sohn Metallwerke GmbH,mueller sohn metallwerke,DE,COPPER,Rolling Mill,3,ERP_SAP|SUPPLIER_SURVEY|SUSTAINABILITY_PORTAL,ERP_SAP,2023-03-31,0.9171,False
+T2E-003,Nordic Copper Refining AB,nordic copper refining,SE,COPPER,Refinery,3,ERP_SAP|SUPPLIER_SURVEY|SUSTAINABILITY_PORTAL,ERP_SAP,2023-05-06,1.0,False
+T2E-004,Silesia Steel Processing Sp. z o.o.,silesia steel processing,PL,STEEL_HRC,Service Centre,2,ERP_SAP|SUPPLIER_SURVEY,ERP_SAP,2023-07-02,1.0,False
+T2E-005,Anadolu Bakır Sanayi A.Ş.,anadolu bakir sanayi,TR,COPPER,Rolling Mill,3,ERP_SAP|SUPPLIER_SURVEY|SUSTAINABILITY_PORTAL,ERP_SAP,2023-07-17,1.0,False
+T2E-006,Jiangsu Everbright Zinc Alloys Ltd.,jiangsu everbright zinc alloys,CN,ZINC,Smelter,2,ERP_SAP|SUPPLIER_SURVEY,ERP_SAP,2023-06-26,1.0,False
+T2E-007,Rheinland Zinkveredelung GmbH & Co. KG,rheinland zinkveredelung,DE,ZINC,Coater,2,ERP_SAP|SUPPLIER_SURVEY,ERP_SAP,2023-04-09,1.0,False
+T2E-008,Alpine Aluminium Extrusion AG,alpine aluminium extrusion,AT,ALUMINIUM,Extruder,3,ERP_SAP|SUPPLIER_SURVEY|SUSTAINABILITY_PORTAL,ERP_SAP,2023-05-08,1.0,False
+T2E-009,Baltic Nickel Alloys UAB,baltic nickel alloys,LT,NICKEL,Alloy Producer,2,ERP_SAP|SUPPLIER_SURVEY,ERP_SAP,2024-03-04,1.0,False
+T2E-010,Iberia Silver Contacts S.L.,iberia silver contacts,ES,SILVER,Contact Maker,2,ERP_SAP|SUSTAINABILITY_PORTAL,ERP_SAP,2023-12-29,1.0,False
+T2E-011,"Hunan Silver Technology Co., Ltd.",hunan silver technology,CN,SILVER,Refinery,2,ERP_SAP|SUPPLIER_SURVEY,ERP_SAP,2023-09-17,1.0,False
+T2E-012,Donau Stahlservice Ges.m.b.H.,donau stahlservice,AT,STEEL_HRC,Service Centre,3,ERP_SAP|SUPPLIER_SURVEY|SUSTAINABILITY_PORTAL,ERP_SAP,2023-06-27,1.0,False
+T2E-013,Lombardy Metal Forming S.r.l.,lombardy metal forming,IT,COPPER,Former,2,ERP_SAP|SUPPLIER_SURVEY,ERP_SAP,2023-10-17,1.0,False
+T2E-014,Emirates Aluminium Trading FZE,emirates aluminium trading,AE,ALUMINIUM,Trader,2,ERP_SAP|SUPPLIER_SURVEY,ERP_SAP,2023-09-22,1.0,False
+T2E-015,"Korea Precision Steel Co., Ltd.",korea precision steel,KR,STEEL_HRC,Mill,2,ERP_SAP|SUSTAINABILITY_PORTAL,ERP_SAP,2023-04-20,1.0,False
+T2E-016,Vistula Copper Wire Sp. z o.o.,vistula copper wire,PL,COPPER,Wire Drawer,2,ERP_SAP|SUPPLIER_SURVEY,ERP_SAP,2023-10-26,0.948,False
+T2E-017,Bohemia Metalltechnik s.r.o.,bohemia metalltechnik,CZ,STEEL_HRC,Stamper,2,ERP_SAP|SUPPLIER_SURVEY,ERP_SAP,2023-10-15,1.0,False
+T2E-018,Andes Copper Cathodes S.A.,andes copper cathodes,CL,COPPER,Mine / Refinery,2,ERP_SAP|SUPPLIER_SURVEY,ERP_SAP,2023-02-09,1.0,False
+T2E-019,Guangdong Sunrise Int'l Metals Co.,guangdong sunrise international l metals,CN,ALUMINIUM,Trader,3,ERP_SAP|SUPPLIER_SURVEY|SUSTAINABILITY_PORTAL,ERP_SAP,2023-04-06,0.988,False
+T2E-020,Saxony Steel & Wire GmbH,saxony steel wire,DE,STEEL_HRC,Mill,2,ERP_SAP|SUPPLIER_SURVEY,ERP_SAP,2023-01-19,1.0,False

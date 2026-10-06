@@ -1,0 +1,18 @@
+table 'Carbon Price'
+	lineageTag: 2cd8a3e7-fb83-4d2c-8fc8-f5b8194ce954
+
+	column Value
+		formatString: 0
+		lineageTag: daca3fee-47cb-4a87-ba44-3f8b61f8add6
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Value]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Carbon Price' = calculated
+		mode: import
+		source = GENERATESERIES ( 0, 200, 5 )
+
+	annotation PBI_Id = 1ff67134df904a789995ad6c86633c28
+

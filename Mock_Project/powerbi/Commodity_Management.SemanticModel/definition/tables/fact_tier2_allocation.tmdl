@@ -1,0 +1,202 @@
+table fact_tier2_allocation
+	lineageTag: 34f2523b-ada4-4a75-bd1c-9db9c7d7ec2c
+
+	column declaration_id
+		dataType: string
+		lineageTag: f60a4aee-cf61-4227-82ab-4f9380d8da5b
+		summarizeBy: none
+		sourceColumn: declaration_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column tier1_id
+		dataType: string
+		lineageTag: 57669826-7389-448c-b719-a20c711265fb
+		summarizeBy: none
+		sourceColumn: tier1_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column metal_id
+		dataType: string
+		lineageTag: 1be10003-7e87-4161-ab76-c1a8c301e5e0
+		summarizeBy: none
+		sourceColumn: metal_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column raw_supplier_id
+		dataType: string
+		lineageTag: 6af24d7e-1ddb-478a-b395-6b3a999a4ef5
+		summarizeBy: none
+		sourceColumn: raw_supplier_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column declared_supplier_name
+		dataType: string
+		lineageTag: 56c4a7a3-80bc-4f9a-9b46-99b0ddefe9bf
+		summarizeBy: none
+		sourceColumn: declared_supplier_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column t2_entity_id
+		dataType: string
+		lineageTag: 3ecdd938-1251-4876-9d5d-d3d688850165
+		summarizeBy: none
+		sourceColumn: t2_entity_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column golden_name
+		dataType: string
+		lineageTag: 1287097e-aa06-445d-be0b-fd636b252ee3
+		summarizeBy: none
+		sourceColumn: golden_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column resolved_country_code
+		dataType: string
+		lineageTag: 78779a0a-6451-413f-9acf-d41df25d90f7
+		summarizeBy: none
+		sourceColumn: resolved_country_code
+
+		annotation SummarizationSetBy = Automatic
+
+	column declared_country_code
+		dataType: string
+		lineageTag: de249adb-1f23-47bc-bc17-12120f624e3a
+		summarizeBy: none
+		sourceColumn: declared_country_code
+
+		annotation SummarizationSetBy = Automatic
+
+	column declared_spend_share
+		dataType: double
+		lineageTag: 6fee37cc-d6a4-40e1-87ab-4bfbecffed18
+		summarizeBy: sum
+		sourceColumn: declared_spend_share
+
+		annotation SummarizationSetBy = Automatic
+
+	column tier1_metal_spend_eur
+		dataType: double
+		lineageTag: b78a7657-4c03-4759-ad15-67c96d00fad8
+		summarizeBy: sum
+		sourceColumn: tier1_metal_spend_eur
+
+		annotation SummarizationSetBy = Automatic
+
+	column tier1_metal_kg
+		dataType: double
+		lineageTag: 0f1b1a69-b556-4c26-8d3f-7205e7e5da11
+		summarizeBy: sum
+		sourceColumn: tier1_metal_kg
+
+		annotation SummarizationSetBy = Automatic
+
+	column allocated_spend_eur
+		dataType: double
+		lineageTag: 41cb7627-9537-4dce-bf3b-2963172ffb82
+		summarizeBy: sum
+		sourceColumn: allocated_spend_eur
+
+		annotation SummarizationSetBy = Automatic
+
+	column allocated_metal_kg
+		dataType: double
+		lineageTag: 4ab92718-1344-41f3-9d90-409cfd159c0c
+		summarizeBy: sum
+		sourceColumn: allocated_metal_kg
+
+		annotation SummarizationSetBy = Automatic
+
+	column cbam_in_scope
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: e05ee30f-0d50-4f69-8d70-1881969c073c
+		summarizeBy: none
+		sourceColumn: cbam_in_scope
+
+		annotation SummarizationSetBy = Automatic
+
+	column import_flag
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 0861bf76-f756-4fca-bf52-785af4d78824
+		summarizeBy: none
+		sourceColumn: import_flag
+
+		annotation SummarizationSetBy = Automatic
+
+	column cbam_liable_flag
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 0464837a-e8a9-4bf5-a354-e9a5409edf3c
+		summarizeBy: none
+		sourceColumn: cbam_liable_flag
+
+		annotation SummarizationSetBy = Automatic
+
+	column source_system
+		dataType: string
+		lineageTag: 1f61208b-ba17-4155-8ab2-8914d33540c1
+		summarizeBy: none
+		sourceColumn: source_system
+
+		annotation SummarizationSetBy = Automatic
+
+	column self_declared_confidence
+		dataType: string
+		lineageTag: cbf8d479-0168-4930-9fed-5fc2c64f5946
+		summarizeBy: none
+		sourceColumn: self_declared_confidence
+
+		annotation SummarizationSetBy = Automatic
+
+	column verified_by_audit
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 63217ca3-03d2-40ee-80db-e332613827c6
+		summarizeBy: none
+		sourceColumn: verified_by_audit
+
+		annotation SummarizationSetBy = Automatic
+
+	column unverified_flag
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: a4acfa9f-3773-4976-8889-3e8661fed707
+		summarizeBy: none
+		sourceColumn: unverified_flag
+
+		annotation SummarizationSetBy = Automatic
+
+	column low_confidence_flag
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 14a5153d-1b54-4aa2-9251-dbabeaea003a
+		summarizeBy: none
+		sourceColumn: low_confidence_flag
+
+		annotation SummarizationSetBy = Automatic
+
+	partition fact_tier2_allocation = m
+		mode: import
+		queryGroup: 01_Facts
+		source =
+				let
+				    Source = stg_gold_folder,
+				    Content = Source{[Name = "fact_tier2_allocation.csv"]}[Content],
+				    #"Imported CSV" = Csv.Document(Content,[Delimiter=",", Columns=22, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(#"Imported CSV", [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"declaration_id", type text}, {"tier1_id", type text}, {"metal_id", type text}, {"raw_supplier_id", type text}, {"declared_supplier_name", type text}, {"t2_entity_id", type text}, {"golden_name", type text}, {"resolved_country_code", type text}, {"declared_country_code", type text}, {"declared_spend_share", type number}, {"tier1_metal_spend_eur", type number}, {"tier1_metal_kg", type number}, {"allocated_spend_eur", type number}, {"allocated_metal_kg", type number}, {"cbam_in_scope", type logical}, {"import_flag", type logical}, {"cbam_liable_flag", type logical}, {"source_system", type text}, {"self_declared_confidence", type text}, {"verified_by_audit", type logical}, {"unverified_flag", type logical}, {"low_confidence_flag", type logical}}, "en-US")
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

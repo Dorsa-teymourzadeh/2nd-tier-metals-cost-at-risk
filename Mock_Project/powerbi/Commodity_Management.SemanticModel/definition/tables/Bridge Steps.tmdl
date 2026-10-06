@@ -1,0 +1,39 @@
+table 'Bridge Steps'
+	lineageTag: 0e829feb-1e96-414a-8799-61521f367e28
+
+	column Step
+		lineageTag: e8c77c99-a093-4afb-ba5b-a054d1b5a6f6
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Step]
+		sortByColumn: 'Step Order'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Step Order'
+		formatString: 0
+		lineageTag: d1260f83-a16b-4b59-98cb-a6b5764c25cf
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Step Order]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Bridge Steps' = calculated
+		mode: import
+		source =
+				
+				DATATABLE (
+				    "Step", STRING,
+				    "Step Order", INTEGER,
+				    {
+				        { "Base price",           1 },
+				        { "Metal-justified",      2 },
+				        { "Inflation-justified", 3 },
+				        { "Unexplained",          4 },
+				        { "Actual spend",         5 }
+				    }
+				)
+
+	annotation PBI_Id = 396b6172377a4322b3537999ceb6e635
+

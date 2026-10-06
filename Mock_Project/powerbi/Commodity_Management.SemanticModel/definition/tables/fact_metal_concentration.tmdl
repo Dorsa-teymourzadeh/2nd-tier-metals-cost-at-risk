@@ -1,0 +1,111 @@
+table fact_metal_concentration
+	lineageTag: 10c19f01-ff0c-4fcf-9faa-23c569ba778d
+
+	column metal_id
+		dataType: string
+		lineageTag: c738c9c0-a50f-4bbb-bbde-87a72ce7bba5
+		summarizeBy: none
+		sourceColumn: metal_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column allocated_spend_eur
+		dataType: double
+		lineageTag: 27981273-7d43-4490-a80e-75abfe8a0327
+		summarizeBy: sum
+		sourceColumn: allocated_spend_eur
+
+		annotation SummarizationSetBy = Automatic
+
+	column n_declared_names
+		dataType: int64
+		formatString: 0
+		lineageTag: 85f5084d-1cf3-492b-ba8f-563198d0ce2b
+		summarizeBy: sum
+		sourceColumn: n_declared_names
+
+		annotation SummarizationSetBy = Automatic
+
+	column n_resolved_entities
+		dataType: int64
+		formatString: 0
+		lineageTag: fcabc07e-207e-4962-8518-4c3d70d888b0
+		summarizeBy: sum
+		sourceColumn: n_resolved_entities
+
+		annotation SummarizationSetBy = Automatic
+
+	column hhi_as_declared
+		dataType: double
+		lineageTag: f4032e2d-e913-4637-98a9-c9b7bd6361e8
+		summarizeBy: sum
+		sourceColumn: hhi_as_declared
+
+		annotation SummarizationSetBy = Automatic
+
+	column hhi_after_resolution
+		dataType: double
+		lineageTag: 2728126f-b965-4d32-8d22-33f715b7a2b0
+		summarizeBy: sum
+		sourceColumn: hhi_after_resolution
+
+		annotation SummarizationSetBy = Automatic
+
+	column hhi_understatement
+		dataType: double
+		lineageTag: 23ecddc4-690d-4ed7-908d-d51bfbf4e1f7
+		summarizeBy: sum
+		sourceColumn: hhi_understatement
+
+		annotation SummarizationSetBy = Automatic
+
+	column highly_concentrated_flag
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 146cb074-809d-4084-a739-138d89893aa0
+		summarizeBy: none
+		sourceColumn: highly_concentrated_flag
+
+		annotation SummarizationSetBy = Automatic
+
+	column largest_entity
+		dataType: string
+		lineageTag: 05c916bb-8e88-4003-885b-928322b8b993
+		summarizeBy: none
+		sourceColumn: largest_entity
+
+		annotation SummarizationSetBy = Automatic
+
+	column largest_entity_spend_eur
+		dataType: double
+		lineageTag: b7c91069-7021-4e06-b18a-2a06f94af87d
+		summarizeBy: sum
+		sourceColumn: largest_entity_spend_eur
+
+		annotation SummarizationSetBy = Automatic
+
+	column largest_entity_share
+		dataType: double
+		lineageTag: f49a0619-d563-4dcc-b294-79332a3e9e21
+		summarizeBy: sum
+		sourceColumn: largest_entity_share
+
+		annotation SummarizationSetBy = Automatic
+
+	partition fact_metal_concentration = m
+		mode: import
+		queryGroup: 01_Facts
+		source =
+				let
+				    Source = stg_gold_folder,
+				    Content = Source{[Name = "fact_metal_concentration.csv"]}[Content],
+				    #"Imported CSV" = Csv.Document(Content,[Delimiter=",", Columns=11, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(#"Imported CSV", [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"metal_id", type text}, {"allocated_spend_eur", type number}, {"n_declared_names", Int64.Type}, {"n_resolved_entities", Int64.Type}, {"hhi_as_declared", type number}, {"hhi_after_resolution", type number}, {"hhi_understatement", type number}, {"highly_concentrated_flag", type logical}, {"largest_entity", type text}, {"largest_entity_spend_eur", type number}, {"largest_entity_share", type number}}, "en-US")
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,321 @@
+table fact_should_cost
+	lineageTag: 4c5d1010-f4bd-4982-8017-3a6b108f36ac
+
+	column po_id
+		dataType: string
+		lineageTag: 8613fc60-0f34-4400-9c68-280ee9c7a49d
+		summarizeBy: none
+		sourceColumn: po_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column po_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 63475eac-8aa0-4775-b40b-7f30e2ca069b
+		summarizeBy: none
+		sourceColumn: po_date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column year_month
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 63895a30-62b3-497f-a3a0-686a5687aa1d
+		summarizeBy: none
+		sourceColumn: year_month
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column month_index
+		dataType: int64
+		formatString: 0
+		lineageTag: 960f66c4-91ec-4e26-805c-d2502717a9d3
+		summarizeBy: sum
+		sourceColumn: month_index
+
+		annotation SummarizationSetBy = Automatic
+
+	column part_id
+		dataType: string
+		lineageTag: 1af6f6b4-6006-4202-b91f-51c5e4f4d483
+		summarizeBy: none
+		sourceColumn: part_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column tier1_id
+		dataType: string
+		lineageTag: 1e5a28cf-6678-44a4-83b7-d75744d7ef53
+		summarizeBy: none
+		sourceColumn: tier1_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column contract_id
+		dataType: string
+		lineageTag: 7424f20c-0bda-4045-89d3-4c713dc6bf45
+		summarizeBy: none
+		sourceColumn: contract_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column metal_clause_type
+		dataType: string
+		lineageTag: 36158dd6-8cc0-4ae2-9f4e-1ee274dc6f5b
+		summarizeBy: none
+		sourceColumn: metal_clause_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column index_metal_id
+		dataType: string
+		lineageTag: 8f6e375f-1fa8-47ad-8cde-64910fe61ef4
+		summarizeBy: none
+		sourceColumn: index_metal_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column indexed_cost_share
+		dataType: double
+		lineageTag: 6fca7a45-0136-48f0-b859-7e9986e8b336
+		summarizeBy: sum
+		sourceColumn: indexed_cost_share
+
+		annotation SummarizationSetBy = Automatic
+
+	column passthrough_pct
+		dataType: double
+		lineageTag: 9bbe56b7-cd6c-4446-9912-2da2e1915365
+		summarizeBy: sum
+		sourceColumn: passthrough_pct
+
+		annotation SummarizationSetBy = Automatic
+
+	column cap_pct
+		dataType: double
+		lineageTag: 97a3edc4-4b18-4985-886c-59f50aba294c
+		summarizeBy: sum
+		sourceColumn: cap_pct
+
+		annotation SummarizationSetBy = Automatic
+
+	column floor_pct
+		dataType: double
+		lineageTag: 0e692988-bb1a-4c9e-ad30-9050d3cc29d5
+		summarizeBy: sum
+		sourceColumn: floor_pct
+
+		annotation SummarizationSetBy = Automatic
+
+	column reset_frequency
+		dataType: string
+		lineageTag: 9a1a2686-1917-4434-b4bc-d24660d79dfb
+		summarizeBy: none
+		sourceColumn: reset_frequency
+
+		annotation SummarizationSetBy = Automatic
+
+	column reset_lag_months
+		dataType: int64
+		formatString: 0
+		lineageTag: 96e2c397-63e3-4e45-9bf9-23f4435a3a9f
+		summarizeBy: sum
+		sourceColumn: reset_lag_months
+
+		annotation SummarizationSetBy = Automatic
+
+	column reset_month_index
+		dataType: int64
+		formatString: 0
+		lineageTag: b4c2b1b9-60e2-47ad-b85f-c1fa7fb33f8b
+		summarizeBy: sum
+		sourceColumn: reset_month_index
+
+		annotation SummarizationSetBy = Automatic
+
+	column index_move_at_reset
+		dataType: double
+		lineageTag: d5039c99-14b7-42f4-a6a4-dd7ad38889cd
+		summarizeBy: sum
+		sourceColumn: index_move_at_reset
+
+		annotation SummarizationSetBy = Automatic
+
+	column index_move_current
+		dataType: double
+		lineageTag: a841ea2e-096e-411f-868a-a535e717f7c4
+		summarizeBy: sum
+		sourceColumn: index_move_current
+
+		annotation SummarizationSetBy = Automatic
+
+	column uncapped_adj
+		dataType: double
+		lineageTag: cc3885d7-5201-4442-bb90-46d16c1a9e55
+		summarizeBy: sum
+		sourceColumn: uncapped_adj
+
+		annotation SummarizationSetBy = Automatic
+
+	column clause_adj
+		dataType: double
+		lineageTag: 4acc54e9-4bdd-4bfc-9e95-536943eacf51
+		summarizeBy: sum
+		sourceColumn: clause_adj
+
+		annotation SummarizationSetBy = Automatic
+
+	column lag_adj_delta
+		dataType: double
+		lineageTag: 902e666f-76f3-4204-b8c6-88300abff371
+		summarizeBy: sum
+		sourceColumn: lag_adj_delta
+
+		annotation SummarizationSetBy = Automatic
+
+	column escalation_factor
+		dataType: double
+		lineageTag: c01d4b27-e547-4856-b251-9f5bae0112f0
+		summarizeBy: sum
+		sourceColumn: escalation_factor
+
+		annotation SummarizationSetBy = Automatic
+
+	column order_qty
+		dataType: int64
+		formatString: 0
+		lineageTag: 577085fc-99cc-43a0-a93d-abb4ad9f4efb
+		summarizeBy: sum
+		sourceColumn: order_qty
+
+		annotation SummarizationSetBy = Automatic
+
+	column unit_price_eur
+		dataType: double
+		lineageTag: 8490e670-ef86-489c-9cab-b0085938cefe
+		summarizeBy: sum
+		sourceColumn: unit_price_eur
+
+		annotation SummarizationSetBy = Automatic
+
+	column net_value_eur
+		dataType: double
+		lineageTag: 9ab1910b-e363-47c6-b8e0-59ee2a874375
+		summarizeBy: sum
+		sourceColumn: net_value_eur
+
+		annotation SummarizationSetBy = Automatic
+
+	column base_price_eur
+		dataType: double
+		lineageTag: 04b68a91-fd69-4fcc-9e51-601d66bf61be
+		summarizeBy: sum
+		sourceColumn: base_price_eur
+
+		annotation SummarizationSetBy = Automatic
+
+	column calibration_confounded_flag
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: dceee16b-8f15-4799-b8ed-7a5894425bf4
+		summarizeBy: none
+		sourceColumn: calibration_confounded_flag
+
+		annotation SummarizationSetBy = Automatic
+
+	column should_cost_unit_eur
+		dataType: double
+		lineageTag: 211c2e86-8fa0-45c1-8c4b-a03724b2e732
+		summarizeBy: sum
+		sourceColumn: should_cost_unit_eur
+
+		annotation SummarizationSetBy = Automatic
+
+	column should_cost_eur
+		dataType: double
+		lineageTag: bff92eae-f816-4373-8b8e-cd2cc4f13091
+		summarizeBy: sum
+		sourceColumn: should_cost_eur
+
+		annotation SummarizationSetBy = Automatic
+
+	column price_variance_eur
+		dataType: double
+		lineageTag: 6ad5c0a7-df73-4dcb-9c34-3619123a951b
+		summarizeBy: sum
+		sourceColumn: price_variance_eur
+
+		annotation SummarizationSetBy = Automatic
+
+	column metal_justified_eur
+		dataType: double
+		lineageTag: 94410e2c-d18e-4cc9-bca6-b18fc4b859c8
+		summarizeBy: sum
+		sourceColumn: metal_justified_eur
+
+		annotation SummarizationSetBy = Automatic
+
+	column inflation_justified_eur
+		dataType: double
+		lineageTag: 8481ba94-bc56-4a27-aed4-da33aa91fe12
+		summarizeBy: sum
+		sourceColumn: inflation_justified_eur
+
+		annotation SummarizationSetBy = Automatic
+
+	column unexplained_eur
+		dataType: double
+		lineageTag: 957268b6-72a0-4d32-8217-76f84e1e9076
+		summarizeBy: sum
+		sourceColumn: unexplained_eur
+
+		annotation SummarizationSetBy = Automatic
+
+	column unexplained_pct
+		dataType: double
+		lineageTag: f477ed0a-ec0b-49ef-b4ea-4db6e499f672
+		summarizeBy: sum
+		sourceColumn: unexplained_pct
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column standard_cost_eur
+		dataType: double
+		lineageTag: 69323c0b-4deb-406f-a85f-608d02e953f7
+		summarizeBy: sum
+		sourceColumn: standard_cost_eur
+
+		annotation SummarizationSetBy = Automatic
+
+	column should_cost_vs_standard_eur
+		dataType: double
+		lineageTag: 6d764a92-e1fd-40fe-8b0e-b081a3d02b01
+		summarizeBy: sum
+		sourceColumn: should_cost_vs_standard_eur
+
+		annotation SummarizationSetBy = Automatic
+
+	partition fact_should_cost = m
+		mode: import
+		queryGroup: 01_Facts
+		source =
+				let
+				    Source = stg_gold_folder,
+				    Content = Source{[Name = "fact_should_cost.csv"]}[Content],
+				    #"Imported CSV" = Csv.Document(Content,[Delimiter=",", Columns=36, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(#"Imported CSV", [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"po_id", type text}, {"po_date", type date}, {"year_month", type date}, {"month_index", Int64.Type}, {"part_id", type text}, {"tier1_id", type text}, {"contract_id", type text}, {"metal_clause_type", type text}, {"index_metal_id", type text}, {"indexed_cost_share", type number}, {"passthrough_pct", type number}, {"cap_pct", type number}, {"floor_pct", type number}, {"reset_frequency", type text}, {"reset_lag_months", Int64.Type}, {"reset_month_index", Int64.Type}, {"index_move_at_reset", type number}, {"index_move_current", type number}, {"uncapped_adj", type number}, {"clause_adj", type number}, {"lag_adj_delta", type number}, {"escalation_factor", type number}, {"order_qty", Int64.Type}, {"unit_price_eur", type number}, {"net_value_eur", type number}, {"base_price_eur", type number}, {"calibration_confounded_flag", type logical}, {"should_cost_unit_eur", type number}, {"should_cost_eur", type number}, {"price_variance_eur", type number}, {"metal_justified_eur", type number}, {"inflation_justified_eur", type number}, {"unexplained_eur", type number}, {"unexplained_pct", type number}, {"standard_cost_eur", type number}, {"should_cost_vs_standard_eur", type number}}, "en-US")
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

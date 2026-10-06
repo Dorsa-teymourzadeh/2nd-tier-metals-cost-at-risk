@@ -1,0 +1,100 @@
+table dim_metal
+	lineageTag: 1faa0d62-6bdc-4c9a-9332-b780e8ca90f7
+
+	column metal_id
+		dataType: string
+		lineageTag: d773fff2-0d06-40ae-9e57-7f6602dde617
+		summarizeBy: none
+		sourceColumn: metal_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column metal_name
+		dataType: string
+		lineageTag: 96403515-d16e-4f4f-9e12-db21ead5e84c
+		summarizeBy: none
+		sourceColumn: metal_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column exchange
+		dataType: string
+		lineageTag: 24cd5f3e-26ce-4a98-8029-989d19ddfeb9
+		summarizeBy: none
+		sourceColumn: exchange
+
+		annotation SummarizationSetBy = Automatic
+
+	column quote_currency
+		dataType: string
+		lineageTag: 64c6c5c1-8b73-49b6-9c71-aa8a4515ce91
+		summarizeBy: none
+		sourceColumn: quote_currency
+
+		annotation SummarizationSetBy = Automatic
+
+	column quote_unit
+		dataType: string
+		lineageTag: 74825761-cf20-472b-b0f4-5ce9ad9e88ed
+		summarizeBy: none
+		sourceColumn: quote_unit
+
+		annotation SummarizationSetBy = Automatic
+
+	column base_price_quote_ccy
+		dataType: double
+		lineageTag: 2dd93489-a806-424e-abf5-5f799e80d90d
+		summarizeBy: sum
+		sourceColumn: base_price_quote_ccy
+
+		annotation SummarizationSetBy = Automatic
+
+	column annual_volatility_pct
+		dataType: double
+		lineageTag: 6bc6c6e0-ce55-4774-8255-daee1709a2ca
+		summarizeBy: sum
+		sourceColumn: annual_volatility_pct
+
+		annotation SummarizationSetBy = Automatic
+
+	column criticality
+		dataType: string
+		lineageTag: 31f32cbe-df06-4d1a-be9f-549c459c6768
+		summarizeBy: none
+		sourceColumn: criticality
+
+		annotation SummarizationSetBy = Automatic
+
+	column cbam_in_scope
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 41b9caf5-0919-48bf-bdbe-01cecac9ae51
+		summarizeBy: none
+		sourceColumn: cbam_in_scope
+
+		annotation SummarizationSetBy = Automatic
+
+	column conflict_mineral_flag
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 357756db-55cb-4fcd-851e-a19420eb15e7
+		summarizeBy: none
+		sourceColumn: conflict_mineral_flag
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_metal = m
+		mode: import
+		queryGroup: 02_Dimensions
+		source =
+				let
+				    Source = Csv.Document(File.Contents(DataFolder & "raw\dim_metal.csv"),[Delimiter=",", Columns=10, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"metal_id", type text}, {"metal_name", type text}, {"exchange", type text}, {"quote_currency", type text}, {"quote_unit", type text}, {"base_price_quote_ccy", type number}, {"annual_volatility_pct", type number}, {"criticality", type text}, {"cbam_in_scope", type logical}, {"conflict_mineral_flag", type logical}}, "en-US")
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,51 @@
+﻿part_id,part_description,product_family,current_rating_a,primary_tier1_id,annual_volume_units,standard_cost_eur,target_gross_margin_pct,lifecycle_stage
+P-0001,Busbar System 400A BB-400-001,Busbar System,400,T1-001,63142,195.39,24.2,Phase-Out
+P-0002,Contactor 1250A CT-1250-002,Contactor,1250,T1-001,16759,35.72,31.0,Ramp-Up
+P-0003,Busbar System 63A BB-63-003,Busbar System,63,T1-001,52373,141.98,23.9,Serial
+P-0004,Contactor 63A CT-63-004,Contactor,63,T1-001,71979,21.54,27.0,Serial
+P-0005,Busbar System 160A BB-160-005,Busbar System,160,T1-001,15869,89.59,34.5,Serial
+P-0006,Contactor 250A CT-250-006,Contactor,250,T1-001,4849,25.7,22.2,Serial
+P-0007,Busbar System 63A BB-63-007,Busbar System,63,T1-001,41979,206.05,23.8,Serial
+P-0008,Contactor 1250A CT-1250-008,Contactor,1250,T1-001,77983,31.65,25.9,Ramp-Up
+P-0009,Contactor 250A CT-250-009,Contactor,250,T1-002,14585,30.04,25.8,Serial
+P-0010,Circuit Breaker 800A CB-800-010,Circuit Breaker,800,T1-002,63368,32.77,33.9,Serial
+P-0011,Contactor 400A CT-400-011,Contactor,400,T1-002,57441,51.49,31.9,Ramp-Up
+P-0012,Circuit Breaker 63A CB-63-012,Circuit Breaker,63,T1-002,78796,44.66,24.3,Serial
+P-0013,Contactor 100A CT-100-013,Contactor,100,T1-002,85250,26.22,23.9,Phase-Out
+P-0014,Circuit Breaker 100A CB-100-014,Circuit Breaker,100,T1-002,54938,28.24,22.6,Serial
+P-0015,Contactor 160A CT-160-015,Contactor,160,T1-002,38819,23.53,30.8,Ramp-Up
+P-0016,Circuit Breaker 250A CB-250-016,Circuit Breaker,250,T1-002,23641,37.5,35.4,Serial
+P-0017,Circuit Breaker 250A CB-250-017,Circuit Breaker,250,T1-003,45484,19.69,22.2,Serial
+P-0018,Circuit Breaker 800A CB-800-018,Circuit Breaker,800,T1-003,39353,39.75,33.0,Serial
+P-0019,Circuit Breaker 100A CB-100-019,Circuit Breaker,100,T1-003,64075,23.92,30.9,Serial
+P-0020,Circuit Breaker 800A CB-800-020,Circuit Breaker,800,T1-003,28958,65.04,36.5,Ramp-Up
+P-0021,Circuit Breaker 1250A CB-1250-021,Circuit Breaker,1250,T1-003,5929,25.03,32.4,Serial
+P-0022,Circuit Breaker 630A CB-630-022,Circuit Breaker,630,T1-003,34548,35.98,36.6,Serial
+P-0023,Switchgear 160A SG-160-023,Switchgear,160,T1-004,53666,101.72,27.4,Serial
+P-0024,Switchgear 100A SG-100-024,Switchgear,100,T1-004,64786,44.64,31.9,Phase-Out
+P-0025,Switchgear 1250A SG-1250-025,Switchgear,1250,T1-004,44020,81.56,30.8,Phase-Out
+P-0026,Switchgear 630A SG-630-026,Switchgear,630,T1-004,86766,59.61,37.8,Serial
+P-0027,Switchgear 800A SG-800-027,Switchgear,800,T1-004,42917,134.45,28.0,Phase-Out
+P-0028,Switchgear 63A SG-63-028,Switchgear,63,T1-004,10967,82.26,35.7,Serial
+P-0029,Switchgear 250A SG-250-029,Switchgear,250,T1-004,2396,56.23,35.7,Phase-Out
+P-0030,Switchgear 160A SG-160-030,Switchgear,160,T1-005,48955,49.22,26.7,Phase-Out
+P-0031,Circuit Breaker 800A CB-800-031,Circuit Breaker,800,T1-005,37898,36.82,27.8,Ramp-Up
+P-0032,Switchgear 63A SG-63-032,Switchgear,63,T1-005,88284,61.37,36.4,Serial
+P-0033,Circuit Breaker 250A CB-250-033,Circuit Breaker,250,T1-005,22688,36.91,24.5,Serial
+P-0034,Switchgear 800A SG-800-034,Switchgear,800,T1-005,61100,64.76,34.6,Phase-Out
+P-0035,Circuit Breaker 250A CB-250-035,Circuit Breaker,250,T1-005,18295,52.17,22.7,Ramp-Up
+P-0036,Contactor 100A CT-100-036,Contactor,100,T1-006,41536,14.78,26.8,Serial
+P-0037,Circuit Breaker 250A CB-250-037,Circuit Breaker,250,T1-006,36683,30.01,34.5,Serial
+P-0038,Contactor 800A CT-800-038,Contactor,800,T1-006,45539,27.72,33.4,Serial
+P-0039,Circuit Breaker 100A CB-100-039,Circuit Breaker,100,T1-006,15239,23.94,31.1,Serial
+P-0040,Contactor 400A CT-400-040,Contactor,400,T1-006,51010,29.63,31.7,Serial
+P-0041,Circuit Breaker 1250A CB-1250-041,Circuit Breaker,1250,T1-006,88649,45.14,22.5,Serial
+P-0042,Switchgear 160A SG-160-042,Switchgear,160,T1-007,70324,87.91,33.1,Ramp-Up
+P-0043,Busbar System 63A BB-63-043,Busbar System,63,T1-007,17219,240.57,36.4,Ramp-Up
+P-0044,Switchgear 1250A SG-1250-044,Switchgear,1250,T1-007,6568,91.47,25.7,Serial
+P-0045,Busbar System 800A BB-800-045,Busbar System,800,T1-007,78902,129.69,34.1,Serial
+P-0046,Switchgear 1250A SG-1250-046,Switchgear,1250,T1-007,16081,46.74,24.4,Serial
+P-0047,Busbar System 160A BB-160-047,Busbar System,160,T1-008,86616,105.62,36.1,Serial
+P-0048,Busbar System 250A BB-250-048,Busbar System,250,T1-008,63555,154.25,34.8,Phase-Out
+P-0049,Busbar System 400A BB-400-049,Busbar System,400,T1-008,10787,93.85,28.3,Serial
+P-0050,Busbar System 160A BB-160-050,Busbar System,160,T1-008,31747,254.28,28.3,Serial

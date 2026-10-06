@@ -1,0 +1,71 @@
+table kpi_executive_summary
+	lineageTag: c078d5fc-e432-4d9c-bb59-18cf7b8f008e
+
+	column kpi_group
+		dataType: string
+		lineageTag: 968fbae6-734f-40dc-bc3f-4fca07ad95ee
+		summarizeBy: none
+		sourceColumn: kpi_group
+
+		annotation SummarizationSetBy = Automatic
+
+	column kpi_name
+		dataType: string
+		lineageTag: b83c6e3a-f829-4915-9907-efa4faeabdcc
+		summarizeBy: none
+		sourceColumn: kpi_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column kpi_value
+		dataType: double
+		lineageTag: 2f0c16a5-f686-440b-ab8a-c3447da80a19
+		summarizeBy: sum
+		sourceColumn: kpi_value
+
+		annotation SummarizationSetBy = Automatic
+
+	column unit
+		dataType: string
+		lineageTag: 18d09db6-8bde-45f7-a6e8-10342a4c0952
+		summarizeBy: none
+		sourceColumn: unit
+
+		annotation SummarizationSetBy = Automatic
+
+	column scenario
+		dataType: string
+		lineageTag: 2cf90d4a-8c2f-41b6-8bf3-7552050fa2ef
+		summarizeBy: none
+		sourceColumn: scenario
+
+		annotation SummarizationSetBy = Automatic
+
+	column as_of_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 4d6ed656-f95b-4de3-92d5-c5d5589bd545
+		summarizeBy: none
+		sourceColumn: as_of_date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	partition kpi_executive_summary = m
+		mode: import
+		queryGroup: 01_Facts
+		source =
+				let
+				    Source = stg_gold_folder,
+				    Content = Source{[Name = "kpi_executive_summary.csv"]}[Content],
+				    #"Imported CSV" = Csv.Document(Content,[Delimiter=",", Columns=6, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(#"Imported CSV", [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"kpi_group", type text}, {"kpi_name", type text}, {"kpi_value", type number}, {"unit", type text}, {"scenario", type text}, {"as_of_date", type date}}, "en-US")
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

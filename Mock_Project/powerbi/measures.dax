@@ -1,0 +1,489 @@
+// =============================================================================
+// Global 2nd-Tier Metals Transparency & Cost-at-Risk Engine
+// Power BI semantic model -- complete measure script
+//
+// Source      : Mock_Project/data/gold/*.csv  +  5 dimensions from data/raw/
+// Generated   : Phase 4
+//
+// HOW TO USE
+//   Power BI Desktop : copy one block at a time into Modeling > New measure.
+//   Tabular Editor   : paste a block into a new measure, or run as a script.
+//
+// BEFORE YOU START -- four things to set in Power Query, or measures will fail:
+//   1. dim_date[date]                  -> Date type, then Mark as date table.
+//   2. All *_flag columns              -> True/False (Logical) type.
+//                                         They arrive as the text "True"/"False"
+//                                         if type detection is off, and every
+//                                         "= TRUE()" filter then returns blank.
+//   3. fact_should_cost[po_date]       -> Date type.
+//      fact_metal_exposure[po_date]    -> Date type.
+//   4. fact_cost_at_risk[valid_to]     -> Date type.
+// =============================================================================
+
+
+// =============================================================================
+// 0. CALCULATED TABLES
+// =============================================================================
+
+// Modeling > NEW TABLE  (not New measure).
+// Create this BEFORE any measure that references it, otherwise Power BI
+// reports "cannot find table 'Carbon Price'" -- a measure cannot create
+// its own table.
+//
+// GENERATESERIES always names its column [Value]. Referencing it as
+// 'Carbon Price'[Carbon Price] fails. Keep [Value], or rename the column in
+// Model view and update [Carbon Price Value] to match.
+//
+// EASIEST ALTERNATIVE: Modeling > New parameter > Numeric range. That builds
+// the table, the column and the slider measure in one step -- but it names
+// the column after the parameter, so adjust the measure accordingly.
+Carbon Price = GENERATESERIES ( 0, 200, 5 )
+
+// Modeling > New table. Disconnected -- do not relate it to anything.
+Bridge Steps =
+DATATABLE (
+    "Step", STRING,
+    "Step Order", INTEGER,
+    {
+        { "Base price",          1 },
+        { "Metal-justified",     2 },
+        { "Inflation-justified", 3 },
+        { "Unexplained",         4 },
+        { "Actual spend",        5 }
+    }
+)
+
+
+// =============================================================================
+// 1. CALCULATED COLUMNS
+// =============================================================================
+
+// On fact_cost_at_risk.
+Expiry Bucket =
+SWITCH (
+    TRUE (),
+    fact_cost_at_risk[months_to_expiry] <= 0,  "Expired",
+    fact_cost_at_risk[months_to_expiry] <= 3,  "0-3 months",
+    fact_cost_at_risk[months_to_expiry] <= 6,  "4-6 months",
+    fact_cost_at_risk[months_to_expiry] <= 12, "7-12 months",
+    fact_cost_at_risk[months_to_expiry] <= 24, "13-24 months",
+    "24+ months"
+)
+
+// On fact_cost_at_risk. Set Expiry Bucket to Sort by column = Expiry Bucket Sort,
+// otherwise the axis sorts alphabetically and reads as nonsense.
+// Must not reference [Expiry Bucket]: a sort column derived from its target is circular.
+Expiry Bucket Sort =
+SWITCH (
+    TRUE (),
+    fact_cost_at_risk[months_to_expiry] <= 0,  0,
+    fact_cost_at_risk[months_to_expiry] <= 3,  1,
+    fact_cost_at_risk[months_to_expiry] <= 6,  2,
+    fact_cost_at_risk[months_to_expiry] <= 12, 3,
+    fact_cost_at_risk[months_to_expiry] <= 24, 4,
+    5
+)
+
+
+// =============================================================================
+// 2. SPEND AND EXPOSURE
+// =============================================================================
+
+// fact_should_cost is the ONLY spend table. net_value_eur repeats on every
+// metal row of fact_metal_exposure (44,876 rows carry 11,760 orders), so
+// summing spend there overstates it roughly fourfold.
+Purchasing Spend =
+SUM ( fact_should_cost[net_value_eur] )
+
+Embedded Metal Value =
+SUM ( fact_metal_exposure[metal_spend_eur] )
+
+Metal Share of Spend =
+DIVIDE ( [Embedded Metal Value], [Purchasing Spend] )
+
+Embedded Metal (t) =
+DIVIDE ( SUM ( fact_metal_exposure[metal_kg] ), 1000 )
+
+
+// =============================================================================
+// 3. THE SHOULD-COST BRIDGE
+// =============================================================================
+
+Should-Cost =
+SUM ( fact_should_cost[should_cost_eur] )
+
+Price Variance =
+[Purchasing Spend] - [Should-Cost]
+
+Price Variance % =
+DIVIDE ( [Price Variance], [Should-Cost] )
+
+Base Price Value =
+SUMX (
+    fact_should_cost,
+    fact_should_cost[base_price_eur] * fact_should_cost[order_qty]
+)
+
+Metal-Justified =
+SUM ( fact_should_cost[metal_justified_eur] )
+
+Inflation-Justified =
+SUM ( fact_should_cost[inflation_justified_eur] )
+
+Unexplained =
+SUM ( fact_should_cost[unexplained_eur] )
+
+Unexplained % =
+DIVIDE ( [Unexplained], [Should-Cost] )
+
+Bridge Value =
+SWITCH (
+    SELECTEDVALUE ( 'Bridge Steps'[Step Order] ),
+    1, [Base Price Value],
+    2, [Metal-Justified],
+    3, [Inflation-Justified],
+    4, [Unexplained],
+    5, [Purchasing Spend]
+)
+
+// Diagnostics only -- put this on a hidden page. The four components
+// reconcile exactly to the invoice; the Python asserts it on every run.
+Bridge Check =
+VAR Reconstructed =
+    [Base Price Value] + [Metal-Justified] + [Inflation-Justified] + [Unexplained]
+RETURN
+    IF ( ABS ( Reconstructed - [Purchasing Spend] ) < 1, "OK", "BROKEN" )
+
+
+// =============================================================================
+// 4. COST-AT-RISK
+// =============================================================================
+
+Cost at Risk (12m) =
+SUM ( fact_cost_at_risk[cost_at_risk_12m_eur] )
+
+Clause Leakage =
+SUM ( fact_cost_at_risk[clause_leakage_eur] )
+
+Reset Lag Cost =
+SUM ( fact_cost_at_risk[reset_lag_cost_eur] )
+
+Unjustified Surcharge (Annualised) =
+CALCULATE (
+    SUM ( fact_surcharge_claims[annualised_unexplained_eur] ),
+    fact_surcharge_claims[material_flag] = TRUE ()
+)
+
+Total Addressable =
+[Unjustified Surcharge (Annualised)]
+    + [Cost at Risk (12m)]
+    + [Clause Leakage]
+    + [Reset Lag Cost]
+
+Addressable % of Spend =
+DIVIDE ( [Total Addressable], [Purchasing Spend] )
+
+// NOTE: renamed from "Spend Expiring <=12m". Comparison operators in a
+// measure name break every reference to it.
+Spend Expiring Within 12m =
+CALCULATE (
+    SUM ( fact_cost_at_risk[spend_12m_eur] ),
+    fact_cost_at_risk[months_to_expiry] > 0,
+    fact_cost_at_risk[months_to_expiry] <= 12
+)
+
+Contracts Expiring Within 6m =
+CALCULATE (
+    COUNTROWS ( fact_cost_at_risk ),
+    fact_cost_at_risk[months_to_expiry] > 0,
+    fact_cost_at_risk[months_to_expiry] <= 6
+)
+
+Repricing Exposure =
+SUM ( fact_cost_at_risk[repricing_exposure_eur] )
+
+
+// =============================================================================
+// 5. FX DECOMPOSITION (S5)
+// =============================================================================
+// Written against first and last month of the price book rather than
+// LASTNONBLANK, which silently returns the wrong month whenever the
+// visual carries no date context. Intended for a single selected metal.
+
+Index Move (EUR) =
+VAR BaseMonth  = MIN ( dim_price_book[month_index] )
+VAR LastMonth  = MAX ( dim_price_book[month_index] )
+VAR BaseValue  =
+    CALCULATE ( SUM ( dim_price_book[eur_per_kg] ), dim_price_book[month_index] = BaseMonth )
+VAR LastValue  =
+    CALCULATE ( SUM ( dim_price_book[eur_per_kg] ), dim_price_book[month_index] = LastMonth )
+RETURN
+    DIVIDE ( LastValue, BaseValue ) - 1
+
+Index Move (Quote Ccy) =
+VAR BaseMonth  = MIN ( dim_price_book[month_index] )
+VAR LastMonth  = MAX ( dim_price_book[month_index] )
+VAR BaseValue  =
+    CALCULATE ( SUM ( dim_price_book[settlement_price] ), dim_price_book[month_index] = BaseMonth )
+VAR LastValue  =
+    CALCULATE ( SUM ( dim_price_book[settlement_price] ), dim_price_book[month_index] = LastMonth )
+RETURN
+    DIVIDE ( LastValue, BaseValue ) - 1
+
+FX Amplification =
+DIVIDE ( 1 + [Index Move (EUR)], 1 + [Index Move (Quote Ccy)] ) - 1
+
+Metal Price (EUR/kg) =
+VAR LastMonth = MAX ( dim_price_book[month_index] )
+RETURN
+    CALCULATE ( SUM ( dim_price_book[eur_per_kg] ), dim_price_book[month_index] = LastMonth )
+
+
+// =============================================================================
+// 6. N-TIER TRANSPARENCY (S6)
+// =============================================================================
+// Coverage is a share of VALUE, not a count of suppliers. Ten declared small
+// sub-suppliers do not compensate for one undeclared large one.
+
+N-Tier Coverage % =
+DIVIDE (
+    SUM ( fact_ntier_coverage[covered_spend_eur] ),
+    SUM ( fact_ntier_coverage[tier1_metal_spend_eur] )
+)
+
+Blind Metal Spend =
+SUM ( fact_ntier_coverage[blind_spend_eur] )
+
+Undeclared Pairs =
+CALCULATE (
+    COUNTROWS ( fact_ntier_coverage ),
+    fact_ntier_coverage[is_covered] = FALSE ()
+)
+
+// Tier-1s declaring more than 100% of their own sourcing. A small number,
+// but it is the honest caveat to have ready when someone asks how much the
+// declared shares can be trusted.
+Over-Declared Pairs =
+CALCULATE (
+    COUNTROWS ( fact_ntier_coverage ),
+    fact_ntier_coverage[over_declared_flag] = TRUE ()
+)
+
+Allocated Tier-2 Spend =
+SUM ( fact_tier2_allocation[allocated_spend_eur] )
+
+Unverified Declared Spend =
+CALCULATE (
+    [Allocated Tier-2 Spend],
+    fact_tier2_allocation[unverified_flag] = TRUE ()
+)
+
+Unverified Share =
+DIVIDE (
+    [Unverified Declared Spend],
+    CALCULATE ( [Allocated Tier-2 Spend], ALL ( fact_tier2_allocation[unverified_flag] ) )
+)
+
+
+// =============================================================================
+// 7. CONCENTRATION -- HHI (S2)
+// =============================================================================
+// Above 2,500 counts as highly concentrated. Computing it on the raw declared
+// NAMES versus on the RESOLVED ENTITIES shows how much risk the aliasing hid.
+// Written as measures rather than read from fact_metal_concentration so the
+// comparison survives every slicer.
+
+HHI (Resolved) =
+VAR Total = [Allocated Tier-2 Spend]
+RETURN
+    IF (
+        Total > 0,
+        SUMX (
+            VALUES ( fact_tier2_allocation[t2_entity_id] ),
+            VAR EntityShare = DIVIDE ( [Allocated Tier-2 Spend], Total )
+            RETURN EntityShare * EntityShare
+        ) * 10000
+    )
+
+HHI (As Declared) =
+VAR Total = [Allocated Tier-2 Spend]
+RETURN
+    IF (
+        Total > 0,
+        SUMX (
+            VALUES ( fact_tier2_allocation[declared_supplier_name] ),
+            VAR NameShare = DIVIDE ( [Allocated Tier-2 Spend], Total )
+            RETURN NameShare * NameShare
+        ) * 10000
+    )
+
+HHI Understatement =
+[HHI (Resolved)] - [HHI (As Declared)]
+
+Concentration Verdict =
+SWITCH (
+    TRUE (),
+    ISBLANK ( [HHI (Resolved)] ),      "No allocated spend",
+    [HHI (Resolved)] >= 2500,          "Highly concentrated",
+    [HHI (Resolved)] >= 1500,          "Moderately concentrated",
+    "Competitive"
+)
+
+Largest Entity Share =
+VAR Total = [Allocated Tier-2 Spend]
+RETURN
+    DIVIDE (
+        MAXX ( VALUES ( fact_tier2_allocation[t2_entity_id] ), [Allocated Tier-2 Spend] ),
+        Total
+    )
+
+
+// =============================================================================
+// 8. TIER-2 RISK (S4)
+// =============================================================================
+// Cyber maturity, geopolitics and compliance are only meaningful next to
+// exposure. A weak supplier you barely buy from is a nuisance; a weak supplier
+// carrying a fifth of your metal value is business continuity.
+
+Spend-Weighted Risk =
+SUM ( dim_supplier_tier2_risk[spend_weighted_risk_eur] )
+
+Composite Risk (Spend-Weighted) =
+DIVIDE (
+    SUMX (
+        dim_supplier_tier2_risk,
+        dim_supplier_tier2_risk[composite_risk_score]
+            * dim_supplier_tier2_risk[allocated_spend_eur]
+    ),
+    SUM ( dim_supplier_tier2_risk[allocated_spend_eur] )
+)
+
+Critical Entities =
+CALCULATE (
+    COUNTROWS ( dim_supplier_tier2_risk ),
+    dim_supplier_tier2_risk[risk_tier] = "Critical"
+)
+
+Metal Value Below Cyber Line =
+CALCULATE (
+    SUM ( dim_supplier_tier2_risk[allocated_spend_eur] ),
+    dim_supplier_tier2_risk[cyber_maturity_score] < 50
+)
+
+Cyber-Exposed Share =
+DIVIDE (
+    [Metal Value Below Cyber Line],
+    CALCULATE (
+        SUM ( dim_supplier_tier2_risk[allocated_spend_eur] ),
+        REMOVEFILTERS ( dim_supplier_tier2_risk[cyber_maturity_score] )
+    )
+)
+
+Hidden Single-Source Entities =
+CALCULATE (
+    COUNTROWS ( dim_supplier_tier2_risk ),
+    dim_supplier_tier2_risk[hidden_by_aliasing_flag] = TRUE ()
+)
+
+Max Tier-1 Behind One Entity =
+MAX ( dim_supplier_tier2_risk[n_tier1_dependent] )
+
+Entities With Overdue Audit =
+CALCULATE (
+    COUNTROWS ( dim_supplier_tier2_risk ),
+    dim_supplier_tier2_risk[audit_overdue_flag] = TRUE ()
+)
+
+
+// =============================================================================
+// 9. CBAM
+// =============================================================================
+// A carbon liability is owed on MASS, not on money, so these run off
+// allocated_metal_kg. Only imports carry a certificate -- intra-EU production
+// is already inside the ETS and must not be double counted, which
+// cbam_liable_flag enforces upstream in the pipeline.
+
+// Requires the 'Carbon Price' calculated table from section 0.
+Carbon Price Value =
+SELECTEDVALUE ( 'Carbon Price'[Value], 85 )
+
+CBAM Liable Metal (t) =
+DIVIDE (
+    CALCULATE (
+        SUM ( fact_tier2_allocation[allocated_metal_kg] ),
+        fact_tier2_allocation[cbam_liable_flag] = TRUE ()
+    ),
+    1000
+)
+
+CBAM Embedded Emissions (tCO2e) =
+DIVIDE (
+    SUMX (
+        FILTER (
+            fact_tier2_allocation,
+            fact_tier2_allocation[cbam_liable_flag] = TRUE ()
+        ),
+        fact_tier2_allocation[allocated_metal_kg]
+            * COALESCE ( RELATED ( dim_supplier_tier2_risk[co2e_kg_per_kg_metal] ), 0 )
+    ),
+    1000
+)
+
+CBAM Certificate Cost =
+[CBAM Embedded Emissions (tCO2e)] * [Carbon Price Value]
+
+Imported Share of Metal Value =
+DIVIDE (
+    CALCULATE (
+        [Allocated Tier-2 Spend],
+        fact_tier2_allocation[import_flag] = TRUE ()
+    ),
+    CALCULATE (
+        [Allocated Tier-2 Spend],
+        REMOVEFILTERS ( fact_tier2_allocation[import_flag] )
+    )
+)
+
+// The switching value: what the same tonnage would cost at the cleanest
+// intensity available anywhere in the resolved network. This is what turns a
+// compliance page into a sourcing recommendation.
+CBAM Cost at Benchmark Intensity =
+VAR Benchmark =
+    MINX (
+        FILTER (
+            ALL ( dim_supplier_tier2_risk ),
+            dim_supplier_tier2_risk[co2e_kg_per_kg_metal] > 0
+        ),
+        dim_supplier_tier2_risk[co2e_kg_per_kg_metal]
+    )
+VAR LiableKg =
+    CALCULATE (
+        SUM ( fact_tier2_allocation[allocated_metal_kg] ),
+        fact_tier2_allocation[cbam_liable_flag] = TRUE ()
+    )
+RETURN
+    DIVIDE ( LiableKg * Benchmark, 1000 ) * [Carbon Price Value]
+
+CBAM Avoidable Cost =
+[CBAM Certificate Cost] - [CBAM Cost at Benchmark Intensity]
+
+
+// =============================================================================
+// 10. TITLES AND LABELS
+// =============================================================================
+// Dynamic titles so the carbon slider visibly drives the page.
+
+CBAM Card Title =
+"CBAM certificate cost at EUR " & FORMAT ( [Carbon Price Value], "#,0" ) & "/t"
+
+Concentration Card Title =
+"Supplier concentration: " & [Concentration Verdict]
+
+Surcharge Headline =
+VAR Gap = [Unjustified Surcharge (Annualised)]
+RETURN
+    IF (
+        Gap > 0,
+        "EUR " & FORMAT ( Gap, "#,0" ) & " of annual surcharge is not justified by the index",
+        "All surcharge claims are justified by the index"
+    )

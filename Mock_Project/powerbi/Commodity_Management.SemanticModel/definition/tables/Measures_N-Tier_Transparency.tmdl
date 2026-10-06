@@ -1,0 +1,78 @@
+table Measures_N-Tier_Transparency
+	lineageTag: 4e88818d-d202-4002-99c7-b183d3014f7d
+
+	measure 'N-Tier Coverage %' =
+			
+			DIVIDE (
+			    SUM ( fact_ntier_coverage[covered_spend_eur] ),
+			    SUM ( fact_ntier_coverage[tier1_metal_spend_eur] )
+			)
+		formatString: 0\ %;-0\ %;0\ %
+		lineageTag: b30724c1-a393-412d-97ef-afbf0180fd3b
+
+	measure 'Blind Metal Spend' = SUM ( fact_ntier_coverage[blind_spend_eur] )
+		formatString: 0
+		lineageTag: 1c39e768-a291-45ef-be23-350b525cb93c
+
+	measure 'Undeclared Pairs' =
+			
+			CALCULATE (
+			    COUNTROWS ( fact_ntier_coverage ),
+			    fact_ntier_coverage[is_covered] = FALSE ()
+			)
+		formatString: 0
+		lineageTag: 2012ca4c-6813-4fd6-918b-a8374be54f98
+
+	measure 'Over-Declared Pairs' =
+			
+			CALCULATE (
+			    COUNTROWS ( fact_ntier_coverage ),
+			    fact_ntier_coverage[over_declared_flag] = TRUE ()
+			)
+		lineageTag: e12f4f26-37a3-4020-b9b0-519ff429d610
+
+	measure 'Allocated Tier-2 Spend' = SUM ( fact_tier2_allocation[allocated_spend_eur] )
+		formatString: 0
+		lineageTag: 6b6d990a-c30c-44a4-bbb1-5a3829e6a9bf
+
+	measure 'Unverified Declared Spend' =
+			
+			CALCULATE (
+			    [Allocated Tier-2 Spend],
+			    fact_tier2_allocation[unverified_flag] = TRUE ()
+			)
+		formatString: 0
+		lineageTag: e95a5985-2593-44d3-acf5-21bf9f801d28
+
+	measure 'Unverified Share' =
+			
+			DIVIDE (
+			    [Unverified Declared Spend],
+			    CALCULATE ( [Allocated Tier-2 Spend], ALL ( fact_tier2_allocation[unverified_flag] ) )
+			)
+		lineageTag: ac9023e1-9c12-4dcc-9f80-588cc4e191dc
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Column1
+		dataType: string
+		isHidden
+		lineageTag: f6e50578-f3f3-4284-ab2d-5d46761f3c85
+		summarizeBy: none
+		sourceColumn: Column1
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Measures_N-Tier_Transparency = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i44FAA==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Column1 = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Column1", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

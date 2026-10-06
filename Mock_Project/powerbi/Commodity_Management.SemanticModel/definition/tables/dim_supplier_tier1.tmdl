@@ -1,0 +1,120 @@
+table dim_supplier_tier1
+	lineageTag: 60039523-1eea-439a-9d7c-0f8dffe282c5
+
+	column tier1_id
+		dataType: string
+		lineageTag: a53dc67a-059a-4d6a-8e67-917a378dd7a7
+		summarizeBy: none
+		sourceColumn: tier1_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column tier1_name
+		dataType: string
+		lineageTag: baea18df-8556-4ba3-8fc1-35fc672922ea
+		summarizeBy: none
+		sourceColumn: tier1_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column country_code
+		dataType: string
+		lineageTag: 5bf477ac-6295-44f8-a351-c169ae98f972
+		summarizeBy: none
+		sourceColumn: country_code
+
+		annotation SummarizationSetBy = Automatic
+
+	column city
+		dataType: string
+		lineageTag: 2d428be4-22b7-48fb-a375-c714b048cc78
+		summarizeBy: none
+		sourceColumn: city
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_families
+		dataType: string
+		lineageTag: e7f10697-7d8f-4de9-9f03-402e095a0d6a
+		summarizeBy: none
+		sourceColumn: product_families
+
+		annotation SummarizationSetBy = Automatic
+
+	column payment_terms_days
+		dataType: int64
+		formatString: 0
+		lineageTag: 62ee8157-1a43-41bd-bdd0-10ed685cdcde
+		summarizeBy: sum
+		sourceColumn: payment_terms_days
+
+		annotation SummarizationSetBy = Automatic
+
+	column relationship_since
+		dataType: int64
+		formatString: 0
+		lineageTag: 419fbf24-e7d7-4028-94df-3b3df89b7562
+		summarizeBy: sum
+		sourceColumn: relationship_since
+
+		annotation SummarizationSetBy = Automatic
+
+	column planned_share_of_spend
+		dataType: double
+		lineageTag: 518ffd43-358a-4c5a-b0ba-238cfb39b59a
+		summarizeBy: sum
+		sourceColumn: planned_share_of_spend
+
+		annotation SummarizationSetBy = Automatic
+
+	column preferred_supplier_flag
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 6a9a9472-d1e6-4c1a-80ee-f208b63b6159
+		summarizeBy: none
+		sourceColumn: preferred_supplier_flag
+
+		annotation SummarizationSetBy = Automatic
+
+	column claimed_metal_surcharge_pct
+		dataType: double
+		lineageTag: 8da88dac-dd76-440e-9510-83929cbfc9f9
+		summarizeBy: sum
+		sourceColumn: claimed_metal_surcharge_pct
+
+		annotation SummarizationSetBy = Automatic
+
+	column surcharge_effective_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: f00b483d-0028-4db1-aa96-4cc2c26e9a2d
+		summarizeBy: none
+		sourceColumn: surcharge_effective_date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column surcharge_justification_text
+		dataType: string
+		lineageTag: 04e2c4b5-3c44-4ca4-86b4-7a6fdbb563e0
+		summarizeBy: none
+		sourceColumn: surcharge_justification_text
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_supplier_tier1 = m
+		mode: import
+		queryGroup: 02_Dimensions
+		source =
+				let
+				    Source = Csv.Document(File.Contents(DataFolder & "raw\dim_supplier_tier1.csv"),[Delimiter=",", Columns=12, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"tier1_id", type text}, {"tier1_name", type text}, {"country_code", type text}, {"city", type text}, {"product_families", type text}, {"payment_terms_days", Int64.Type}, {"relationship_since", Int64.Type}, {"planned_share_of_spend", type number}, {"preferred_supplier_flag", type logical}, {"claimed_metal_surcharge_pct", type number}, {"surcharge_effective_date", type date}, {"surcharge_justification_text", type text}}, "en-US")
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,14 @@
+# Private application material
+cv.md
+Job_Description.txt
+
+# Editor and Python
+.vscode/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.venv/
+
+# Power BI Project local state (contains machine paths and a data cache)
+**/.pbi/localSettings.json
+**/.pbi/cache.abf

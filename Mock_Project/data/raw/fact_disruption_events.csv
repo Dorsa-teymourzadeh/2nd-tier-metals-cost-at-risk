@@ -1,0 +1,13 @@
+﻿event_id,start_date,end_date,country_code,metal_id,event_description,severity,severity_score,lead_time_impact_days
+EVT-01,2023-04-10,2023-06-18,CN,ALUMINIUM,Energy curtailment Yunnan province,Medium,3,14
+EVT-02,2023-09-01,2023-10-20,DE,STEEL_HRC,Rail freight strike Germany,Low,2,7
+EVT-03,2024-01-15,2024-05-30,AE,ALUMINIUM,Red Sea rerouting via Cape of Good Hope,High,4,21
+EVT-04,2024-02-05,2024-04-12,ID,NICKEL,Export ban on unprocessed ore,High,5,28
+EVT-05,2024-03-22,2024-04-30,CL,COPPER,Mine workers strike Atacama region,High,4,18
+EVT-06,2024-06-01,2024-08-15,TR,COPPER,"Currency crisis, supplier liquidity stress",Medium,3,12
+EVT-07,2024-09-10,2024-11-05,CN,ALUMINIUM,Smelter maintenance outage Yunnan Hongtai,High,5,26
+EVT-08,2024-11-01,2024-12-20,PL,STEEL_HRC,"Service centre fire, capacity loss",Medium,3,15
+EVT-09,2025-01-12,2025-03-01,DE,ZINC,"Gas price spike, galvanising curtailed",Medium,3,10
+EVT-10,2025-04-05,2025-06-10,CN,SILVER,Export licence tightening on precious metals,High,4,22
+EVT-11,2025-07-01,2025-08-20,ES,ALUMINIUM,Heatwave production curtailment,Low,2,8
+EVT-12,2025-09-15,2025-11-30,CN,COPPER,Port congestion Shenzhen / Yantian,Medium,3,13

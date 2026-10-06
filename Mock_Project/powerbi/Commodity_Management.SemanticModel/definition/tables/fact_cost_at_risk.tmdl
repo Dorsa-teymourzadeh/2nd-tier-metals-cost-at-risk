@@ -1,0 +1,256 @@
+table fact_cost_at_risk
+	lineageTag: bee599e8-8268-4ebe-8094-bf9302b2de29
+
+	column contract_id
+		dataType: string
+		lineageTag: 0e232e46-3f36-48dd-88b6-9f0886de425e
+		summarizeBy: none
+		sourceColumn: contract_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column part_id
+		dataType: string
+		lineageTag: 666b9c87-4d44-4e0b-8ab6-66a5d0c2345c
+		summarizeBy: none
+		sourceColumn: part_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column tier1_id
+		dataType: string
+		lineageTag: 970ba897-a2d4-4958-b691-704a33e49d88
+		summarizeBy: none
+		sourceColumn: tier1_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column metal_clause_type
+		dataType: string
+		lineageTag: 6002acbb-7456-4982-92cf-b59a0f293732
+		summarizeBy: none
+		sourceColumn: metal_clause_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column index_metal_id
+		dataType: string
+		lineageTag: b0982028-cdf2-4394-892e-dd6f01619836
+		summarizeBy: none
+		sourceColumn: index_metal_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column passthrough_pct
+		dataType: double
+		lineageTag: 3f35563e-45de-4459-80d3-9175f596e821
+		summarizeBy: sum
+		sourceColumn: passthrough_pct
+
+		annotation SummarizationSetBy = Automatic
+
+	column cap_pct
+		dataType: double
+		lineageTag: 748e5510-8e99-4d12-b6ad-53c7c764b8e5
+		summarizeBy: sum
+		sourceColumn: cap_pct
+
+		annotation SummarizationSetBy = Automatic
+
+	column floor_pct
+		dataType: double
+		lineageTag: 67f35ea7-3bd4-4144-a331-99ce5ec8ccc8
+		summarizeBy: sum
+		sourceColumn: floor_pct
+
+		annotation SummarizationSetBy = Automatic
+
+	column reset_lag_months
+		dataType: int64
+		formatString: 0
+		lineageTag: 508e9e06-ba04-4ce7-9338-d8841e2fde78
+		summarizeBy: sum
+		sourceColumn: reset_lag_months
+
+		annotation SummarizationSetBy = Automatic
+
+	column valid_to
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: b50e9fe5-700a-4434-a0fb-0ad3c1994d19
+		summarizeBy: none
+		sourceColumn: valid_to
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column spend_12m_eur
+		dataType: double
+		lineageTag: c37b496c-811d-4999-a8b7-42ddbce9c676
+		summarizeBy: sum
+		sourceColumn: spend_12m_eur
+
+		annotation SummarizationSetBy = Automatic
+
+	column indexed_cost_share
+		dataType: double
+		lineageTag: 0dbe0699-3aa0-41ed-8f55-5af6cf6fb472
+		summarizeBy: sum
+		sourceColumn: indexed_cost_share
+
+		annotation SummarizationSetBy = Automatic
+
+	column index_move_to_date
+		dataType: double
+		lineageTag: a74abcc2-c301-418d-aece-e36aab65ba4a
+		summarizeBy: sum
+		sourceColumn: index_move_to_date
+
+		annotation SummarizationSetBy = Automatic
+
+	column months_to_expiry
+		dataType: int64
+		formatString: 0
+		lineageTag: 27c52752-9366-4124-87b1-3d076ec49b36
+		summarizeBy: sum
+		sourceColumn: months_to_expiry
+
+		annotation SummarizationSetBy = Automatic
+
+	column expired_flag
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 9aab7ace-4685-4ce0-830e-e233190a2552
+		summarizeBy: none
+		sourceColumn: expired_flag
+
+		annotation SummarizationSetBy = Automatic
+
+	column repricing_gap_pct
+		dataType: double
+		lineageTag: 9d216c59-d0ed-47cb-b264-afcd997d50aa
+		summarizeBy: sum
+		sourceColumn: repricing_gap_pct
+
+		annotation SummarizationSetBy = Automatic
+
+	column repricing_exposure_eur
+		dataType: double
+		lineageTag: 25edb09d-c60f-41c3-a0a1-cd9b18020340
+		summarizeBy: sum
+		sourceColumn: repricing_exposure_eur
+
+		annotation SummarizationSetBy = Automatic
+
+	column in_year_weight
+		dataType: double
+		lineageTag: 8f21b2b5-e2f3-4301-9fa7-da0345ca254d
+		summarizeBy: sum
+		sourceColumn: in_year_weight
+
+		annotation SummarizationSetBy = Automatic
+
+	column cost_at_risk_12m_eur
+		dataType: double
+		lineageTag: e6c2ccb9-8f17-4225-8de5-0041829a1134
+		summarizeBy: sum
+		sourceColumn: cost_at_risk_12m_eur
+
+		annotation SummarizationSetBy = Automatic
+
+	column clause_leakage_eur
+		dataType: double
+		lineageTag: 9a4ea304-92dc-49d5-987f-60e018579703
+		summarizeBy: sum
+		sourceColumn: clause_leakage_eur
+
+		annotation SummarizationSetBy = Automatic
+
+	column reset_lag_cost_eur
+		dataType: double
+		lineageTag: ba801567-e9d2-4515-8bf5-edb4d019733d
+		summarizeBy: sum
+		sourceColumn: reset_lag_cost_eur
+
+		annotation SummarizationSetBy = Automatic
+
+	column total_cost_at_risk_eur
+		dataType: double
+		lineageTag: c3038f6b-65a2-48a4-8f0f-b7f6fdf210be
+		summarizeBy: sum
+		sourceColumn: total_cost_at_risk_eur
+
+		annotation SummarizationSetBy = Automatic
+
+	column risk_driver
+		dataType: string
+		lineageTag: 750442f7-89bd-4ac1-a811-61ca35437fbd
+		summarizeBy: none
+		sourceColumn: risk_driver
+
+		annotation SummarizationSetBy = Automatic
+
+	column mitigation
+		dataType: string
+		lineageTag: b5c76ae2-c579-47b0-b15a-a421fcf56b37
+		summarizeBy: none
+		sourceColumn: mitigation
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Expiry Bucket' =
+			
+			SWITCH (
+			    TRUE (),
+			    fact_cost_at_risk[months_to_expiry] <= 0,  "Expired",
+			    fact_cost_at_risk[months_to_expiry] <= 3,  "0-3 months",
+			    fact_cost_at_risk[months_to_expiry] <= 6,  "4-6 months",
+			    fact_cost_at_risk[months_to_expiry] <= 12, "7-12 months",
+			    fact_cost_at_risk[months_to_expiry] <= 24, "13-24 months",
+			    "24+ months"
+			)
+		lineageTag: b2db084b-d336-49ce-a9d6-f6af3741b1cf
+		summarizeBy: none
+		sortByColumn: 'Expiry Bucket Sort'
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Expiry Bucket Sort' =
+			
+			SWITCH (
+			    TRUE (),
+			    fact_cost_at_risk[months_to_expiry] <= 0,  0,
+			    fact_cost_at_risk[months_to_expiry] <= 3,  1,
+			    fact_cost_at_risk[months_to_expiry] <= 6,  2,
+			    fact_cost_at_risk[months_to_expiry] <= 12, 3,
+			    fact_cost_at_risk[months_to_expiry] <= 24, 4,
+			    5
+			)
+		formatString: 0
+		lineageTag: 1508ada2-d561-4b1d-b663-272ce6298f97
+		summarizeBy: sum
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	partition fact_cost_at_risk = m
+		mode: import
+		queryGroup: 01_Facts
+		source =
+				let
+				    Source = stg_gold_folder,
+				    Content = Source{[Name = "fact_cost_at_risk.csv"]}[Content],
+				    #"Imported CSV" = Csv.Document(Content,[Delimiter=",", Columns=24, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(#"Imported CSV", [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"contract_id", type text}, {"part_id", type text}, {"tier1_id", type text}, {"metal_clause_type", type text}, {"index_metal_id", type text}, {"passthrough_pct", type number}, {"cap_pct", type number}, {"floor_pct", type number}, {"reset_lag_months", Int64.Type}, {"valid_to", type date}, {"spend_12m_eur", type number}, {"indexed_cost_share", type number}, {"index_move_to_date", type number}, {"months_to_expiry", Int64.Type}, {"expired_flag", type logical}, {"repricing_gap_pct", type number}, {"repricing_exposure_eur", type number}, {"in_year_weight", type number}, {"cost_at_risk_12m_eur", type number}, {"clause_leakage_eur", type number}, {"reset_lag_cost_eur", type number}, {"total_cost_at_risk_eur", type number}, {"risk_driver", type text}, {"mitigation", type text}}, "en-US")
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,217 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.5.0/schema.json",
+  "name": "c612aa60b732e0c762e7",
+  "position": {
+    "x": 16,
+    "y": 456,
+    "z": 11000,
+    "height": 250,
+    "width": 616,
+    "tabOrder": 11000
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_surcharge_claims"
+                    }
+                  },
+                  "Property": "tier1_name"
+                }
+              },
+              "queryRef": "fact_surcharge_claims.tier1_name",
+              "nativeQueryRef": "supplier",
+              "displayName": "supplier"
+            },
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "fact_surcharge_claims"
+                        }
+                      },
+                      "Property": "claimed_surcharge_pct"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(fact_surcharge_claims.claimed_surcharge_pct)",
+              "nativeQueryRef": "Claimed %",
+              "displayName": "Claimed %"
+            },
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "fact_surcharge_claims"
+                        }
+                      },
+                      "Property": "justified_by_index_pct"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(fact_surcharge_claims.justified_by_index_pct)",
+              "nativeQueryRef": "Index %",
+              "displayName": "Index %"
+            },
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "fact_surcharge_claims"
+                        }
+                      },
+                      "Property": "justified_by_inflation_pct"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(fact_surcharge_claims.justified_by_inflation_pct)",
+              "nativeQueryRef": "Inflation %",
+              "displayName": "Inflation %"
+            },
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "fact_surcharge_claims"
+                        }
+                      },
+                      "Property": "unexplained_pct"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(fact_surcharge_claims.unexplained_pct)",
+              "nativeQueryRef": "Gap %",
+              "displayName": "Gap %"
+            },
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "fact_surcharge_claims"
+                        }
+                      },
+                      "Property": "annualised_unexplained_eur"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(fact_surcharge_claims.annualised_unexplained_eur)",
+              "nativeQueryRef": "Gap (€)",
+              "displayName": "Gap (€)"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_surcharge_claims"
+                    }
+                  },
+                  "Property": "justification_text"
+                }
+              },
+              "queryRef": "fact_surcharge_claims.justification_text",
+              "nativeQueryRef": "Reason",
+              "displayName": "Reason"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "fact_surcharge_claims"
+                  }
+                },
+                "Property": "justification_text"
+              }
+            },
+            "direction": "Ascending"
+          }
+        ]
+      }
+    },
+    "objects": {
+      "columnWidth": [
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "123.3913043478261D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "fact_surcharge_claims.tier1_name"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "81.34782608695652D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "Sum(fact_surcharge_claims.claimed_surcharge_pct)"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "151.08473976962097D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "fact_surcharge_claims.justification_text"
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}
