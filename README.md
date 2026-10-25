@@ -32,8 +32,11 @@ flowchart LR
     A[generate_mock_data.py<br/>15 raw tables, 7 planted scenarios] --> B[resolve_tier2_entities.py<br/>Tier-2 entity resolution]
     A --> C[build_cost_at_risk.py<br/>should-cost, cost-at-risk, HHI, risk score]
     B --> C
-    C --> D[(data/gold<br/>10 star-schema tables)]
-    D --> E[Power BI<br/>semantic model + DAX]
+    C --> E[(data/gold<br/>10 star-schema tables)]
+    E --> F[(Amazon S3)]
+    F --> G[AWS Glue crawler<br/>Data Catalog]
+    G --> H[Amazon Athena<br/>serverless SQL]
+    E --> I[Power BI<br/>semantic model + DAX]
 ```
 
 | Step | Method |
@@ -67,6 +70,14 @@ The CSV outputs are already committed, so you can skip straight to Power BI:
 2. **Transform data → Edit parameters** → set `DataFolder` to your clone's `Mock_Project\data\` folder (keep the trailing backslash).
 3. **Refresh**.
 
+## AWS data lake (S3, Glue, Athena)
+
+The 10 gold tables are also published to a private Amazon S3 bucket (`eu-north-1`), cataloged by an AWS Glue crawler into the database `metals_db`, and queried with SQL in Amazon Athena. The Athena result matches the local pipeline: €5.99M of the €6.09M cost at risk sits in 18 fixed-price copper contracts.
+
+![Athena query on fact_cost_at_risk](docs/images/athena_query.png)
+
+The Power BI report still reads the local CSVs; connecting it to Athena is not done. Setup steps and notes are in [docs/aws-data-lake-quickstart.md](docs/aws-data-lake-quickstart.md), the query is in [Mock_Project/sql](Mock_Project/sql/athena_cost_at_risk_by_commodity.sql).
+
 ## Repository structure
 
 ```
@@ -76,6 +87,7 @@ Mock_Project/
 │   ├── raw/        generated source tables + entity-resolution answer key
 │   ├── processed/  entity-resolution outputs and evaluation
 │   └── gold/       star-schema tables loaded by Power BI
+├── sql/          Athena query
 ├── notebooks/
 │   ├── 00_project_walkthrough.ipynb   step-by-step explanation of every phase
 │   └── 01_powerbi_dax_measures.ipynb  DAX measures and page layout
